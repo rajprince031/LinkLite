@@ -2,10 +2,14 @@ const express = require("express");
 const {
   handleGenerateNewShortUrl,
   handleUrlRedirect,
+  handleGetAllCreatedUrl
 } = require("../controller/url_controller");
+
 const router = express.Router();
 
-router.post("/", handleGenerateNewShortUrl);
+router.route("/urlShortener")
+.post(handleGenerateNewShortUrl)
+.get(handleGetAllCreatedUrl);
 
 router.get("/:shortID", handleUrlRedirect);
 

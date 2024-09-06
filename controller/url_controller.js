@@ -12,13 +12,13 @@ async function handleGenerateNewShortUrl(req,res){
         vistedHistory : []
     })
     
-    return res.status(201).json({status : "Short ID created successfully" , id : shortID})
+    return res.status(201).json({ststus : true, msg : "Short ID created successfully" , id : shortID})
 }
 
 
 async function handleUrlRedirect(req, res){
     const shortId =  req.params.shortID;
-    if(!shortId) return res.status(400).json({error : "Page not found"})
+    if(!shortId) return res.status(400).json({error : "url required!"})
     const entry = await URL.findOneAndUpdate({
         shortId
     },{
@@ -26,10 +26,17 @@ async function handleUrlRedirect(req, res){
             vistedHistory : {timestamps : Date.now()}
         }
     })
+    if(!entry) return res.status(400).json({msg : "URL NOT FOUND"});
     return res.redirect(entry.redirectURL);
+}
+
+async function handleGetAllCreatedUrl(req,res){
+    const allCreatedUrl = await URL.find({});
+    return res.status(200).json(allCreatedUrl);
 }
 
 module.exports = {
     handleGenerateNewShortUrl,
-    handleUrlRedirect
+    handleUrlRedirect,
+    handleGetAllCreatedUrl
 }
