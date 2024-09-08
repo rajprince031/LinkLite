@@ -1,0 +1,15 @@
+
+.main_sigup_container{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
+
+h4:hover{
+    color:blue;
+    cursor: pointer;
+}
+

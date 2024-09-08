@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
-
-const urlSchema = new mongoose.Schema({
+const User = require("./user_model.js")
+const Schema = mongoose.Schema;
+const urlSchema = Schema({
     shortId:{
         type:String,
         required:true,
@@ -9,6 +10,11 @@ const urlSchema = new mongoose.Schema({
     redirectURL :{
         type:String,
         required:true,
+    },
+    creator :{
+        type : Schema.Types.ObjectId,
+        ref : 'User',
+        require :  true
     },
     vistedHistory : [{timestamps : {type:Number}}]
 },{timestamps:true})

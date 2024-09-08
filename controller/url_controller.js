@@ -1,23 +1,25 @@
 const URL = require("../models/url_models")
 
 async function handleGenerateNewShortUrl(req,res){
-    const body = req.body;
-    if(!body.url) return res.status(400).json({"error" : "URL is required"})
+    const {redirectURL,creator} = req.body;
+    if(!redirectURL || !creator) return res.status(400).json({error : `Required field are missing`})
         
     const {nanoid} = await import("nanoid");
-    const shortID = nanoid(8);
+    const shortId = nanoid(8);
     await URL.create({
-        shortId : shortID,
-        redirectURL : body.url,
+        shortId,
+        redirectURL,
+        creator,
         vistedHistory : []
     })
     
-    return res.status(201).json({ststus : true, msg : "Short ID created successfully" , id : shortID})
+    return res.status(201).json({ststus : true, msg : "Short ID created successfully" , id : shortId})
 }
 
 
 async function handleUrlRedirect(req, res){
-    const shortId =  req.params.shortID;
+    const {shortId} =  req.params;
+
     if(!shortId) return res.status(400).json({error : "url required!"})
     const entry = await URL.findOneAndUpdate({
         shortId

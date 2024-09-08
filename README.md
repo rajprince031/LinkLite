@@ -7,7 +7,9 @@ URL Shortening: Users send a POST request to /url with a long URL, and the servi
 URL Redirection: Users can access the shortened URL via GET request to /shortID, which redirects them to the original URL.
 Components:
 
-**server.js**: Sets up the Express server, connects to MongoDB, and defines routes for URL shortening and redirection.
+**server.js**
+
+Sets up the Express server, connects to MongoDB, and defines routes for URL shortening and redirection.
 url_routes.js: Manages URL-related routes, including shortening and redirection, by calling functions from the URL controller.
 url_controller.js: Contains the logic for generating short URLs and handling redirects.
 Usage Example:

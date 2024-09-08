@@ -1,0 +1,12 @@
+.main_home_container{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h3:hover{
+    cursor: pointer;
+    color:blue
+}
