@@ -1,0 +1,26 @@
+.main_dashboard_conatiner{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:20px;
+}
+
+.generate_url_box{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.list_of_all_created_url{
+    width:90vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap:5px;
+}
+
+label{
+    font-size: 20px;
+}

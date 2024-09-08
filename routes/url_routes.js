@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-router.route("/urlShortener")
+router.route("/url-shortener")
 .post(handleGenerateNewShortUrl)
 .get(handleGetAllCreatedUrl);
 
