@@ -12,5 +12,4 @@ router.route("/url-shortener")
 .get(handleGetAllCreatedUrl);
 
 
-
 module.exports = router;
