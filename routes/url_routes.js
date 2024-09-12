@@ -11,6 +11,6 @@ router.route("/url-shortener")
 .post(handleGenerateNewShortUrl)
 .get(handleGetAllCreatedUrl);
 
-router.get("/:shortId", handleUrlRedirect);
+
 
 module.exports = router;

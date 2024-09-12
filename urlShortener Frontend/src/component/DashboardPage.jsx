@@ -1,44 +1,60 @@
 import '../style/dashboardStyle.css';
 import {useEffect, useState} from 'react'
-import { useLocation } from 'react-router-dom';
+import {useLocation, useNavigate } from 'react-router-dom'; 
 
-const Dashboard =()=>{
+const Dashboard = ()=>{
+    const navigate = useNavigate();    
     const location = useLocation();
-    const _id = location.state.id;
+    const sessionId = location.state?.sessionId;
+    
     const [userURL,updateUserURL] = useState({
-        creator:_id,
+        sessionId,
         redirectURL:"",
     });
-    const [urls,updateUrls] = useState([
-
-    ]);
-
+    const [urls,updateUrls] = useState([]);
     const getAllUrl = async ()=>{
         try{
-            console.log("Error is here")
-        const response = await fetch("http://localhost:8000/url-shortener")
+        const response = await fetch("http://localhost:8000/url/url-shortener",{
+            method:"GET",
+            headers:{
+                authorization : localStorage.getItem("uid")
+            },
+        })
             const {status} = response;
-            // if(status === 200){
+            if(status === 200){
                 const arr = await response.json();
-                console.log("I am printing the array : - ",arr)
-                updateUrls(arr)
-            // }
+                updateUrls(arr);
+            }else{
+                navigate('/login')
+            }
         }catch(error){
             console.log("Error occur during fetching the urls : - ",error)
         }
     }
+
+    useEffect(()=>{
+        getAllUrl()
+    },[])
+
+    
+
     const handleGenerateURL = async()=>{
         try{
-        const response = await fetch("http://localhost:8000/url-shortener",{
+            console.log("I am here 1")
+        const response = await fetch("http://localhost:8000/url/url-shortener",{
             method:"POST",
             headers:{
-                "Content-Type" : "application/json"
+                "Content-Type" : "application/json",
+                authorization : localStorage.getItem("uid")
+
             },
             body:JSON.stringify(userURL)
         })
         const {status} = response;
         if(status === 201){
-            alert("short url generated successfully")
+            alert("short url generated successfully");
+            updateUserURL({...userURL,redirectURL:"",})
+            getAllUrl();
         }else if(status === 400){
             alert("Required field are missing")
         }else{
@@ -49,6 +65,8 @@ const Dashboard =()=>{
         console.log("Error in dashboard while creating the short url : -",error);
     }
     }
+    console.log("I am here 2")
+
 
     return (
         <div className="main_dashboard_conatiner">
@@ -70,13 +88,18 @@ const Dashboard =()=>{
                         <th>Short-URL</th>
                         <th>NO. OF Clicks</th>
                     </tr>
-                    {urls.map((val)=>{
-                       return <tr>
-                        <td>{val.redirectURL}</td>
-                        <td>{val.shortId}</td>
-                        {/* <td>{val.vistedHistory.length}</td> */}
-                        </tr>
-                    })}
+                    {
+                        urls.map((val)=>{
+                            return(
+                                <tr>
+                                <td>{val.redirectURL}</td>
+                                <td>{val.shortId}</td>
+                                <td>{val.vistedHistory.length}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                    
                 </table>
             </div>
         </div>

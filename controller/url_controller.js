@@ -1,15 +1,17 @@
 const URL = require("../models/url_models")
-
+const {getUser} = require("../service/user_auth")
+//POST METHOD
 async function handleGenerateNewShortUrl(req,res){
-    const {redirectURL,creator} = req.body;
-    if(!redirectURL || !creator) return res.status(400).json({error : `Required field are missing`})
-        
+    const {redirectURL,sessionId} = req.body;
+    if(!redirectURL) return res.status(400).json({error : `Required field are missing`});
+    const user = getUser(sessionId);
+    if(!user) return res.status(400).json({error:"Access Denied"});
     const {nanoid} = await import("nanoid");
     const shortId = nanoid(8);
     await URL.create({
         shortId,
         redirectURL,
-        creator,
+        creator :  user._id,
         vistedHistory : []
     })
     
@@ -17,6 +19,7 @@ async function handleGenerateNewShortUrl(req,res){
 }
 
 
+//REDIRECT URL
 async function handleUrlRedirect(req, res){
     const {shortId} =  req.params;
 
@@ -32,8 +35,12 @@ async function handleUrlRedirect(req, res){
     return res.redirect(entry.redirectURL);
 }
 
+
+//GET ALL CREATED URL
 async function handleGetAllCreatedUrl(req,res){
-    const allCreatedUrl = await URL.find({});
+    const uid = req.headers.authorization;
+    const {id:creator} =  getUser(uid);
+    const allCreatedUrl = await URL.find({creator});
     return res.status(200).json(allCreatedUrl);
 }
 

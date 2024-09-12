@@ -3,6 +3,7 @@ import '../style/logInStyle.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+
 const LogInPage = () => {
 
     const navigate = useNavigate();
@@ -29,8 +30,10 @@ const LogInPage = () => {
             else if (status === 401) alert("Invalid eamil and password");
             else if (status === 200) {
                 alert("Logged In Successfully");
-                const {id} = await response.json();
-                navigate('/dashboard', { state:{id}})
+                const {sessionId} = await response.json();
+                console.log("I am printing the session id",sessionId)
+                localStorage.setItem("uid",sessionId);
+                navigate('/dashboard',{state: {sessionId}})
             } else alert("Something went wrong");
 
         } catch (error) {
