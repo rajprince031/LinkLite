@@ -57,9 +57,9 @@ const Dashboard = ()=>{
     }
     }
 
-    const navigateToViewDetailsPage =(val)=>{
-        console.log("Printing the response : -", val)
-        navigate(`/dashboard/view-details?short-id=${val.shortId}` , {state : {val}});
+    const navigateToViewDetailsPage =(details)=>{
+        console.log("Printing the response : -", details)
+        navigate(`/dashboard/view-details?short-id=${details.shortId}` , {state : {details}});
     }
 
 
@@ -84,6 +84,8 @@ const Dashboard = ()=>{
                         <th>Short-URL</th>
                         <th>No. of clicks</th>
                         <th>View Details</th>
+                        <th>Status</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,6 +97,8 @@ const Dashboard = ()=>{
                                 <td>{val.shortId}</td>
                                 <td>{val.vistedHistory.length}</td>
                                 <td><button onClick={()=>navigateToViewDetailsPage(val)}>view</button></td>
+                                <td>{val.status}</td>
+                                <td><button>delete</button></td>
                                 </tr>
                             )
                         })
