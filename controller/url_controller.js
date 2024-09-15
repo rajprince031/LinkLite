@@ -3,9 +3,9 @@ const {getUser} = require("../service/user_auth")
 //POST METHOD
 async function handleGenerateNewShortUrl(req,res){
     const {redirectURL,sessionId} = req.body;
-    if(!redirectURL) return res.status(400).json({error : `Required field are missing`});
+    if(!redirectURL) return res.status(400).json({status:false ,error : `Required field are missing`});
     const user = getUser(sessionId);
-    if(!user) return res.status(400).json({error:"Access Denied"});
+    if(!user) return res.status(400).json({status:false ,error:"Access Denied"});
     const {nanoid} = await import("nanoid");
     const shortId = nanoid(8);
     await URL.create({
@@ -23,7 +23,7 @@ async function handleGenerateNewShortUrl(req,res){
 async function handleUrlRedirect(req, res){
     const {shortId} =  req.params;
 
-    if(!shortId) return res.status(400).json({error : "url required!"})
+    if(!shortId) return res.status(400).json({status:false ,error : "url required!"})
     const entry = await URL.findOneAndUpdate({
         shortId
     },{
@@ -31,7 +31,7 @@ async function handleUrlRedirect(req, res){
             vistedHistory : {timestamps : Date.now()}
         }
     })
-    if(!entry) return res.status(400).json({msg : "URL NOT FOUND"});
+    if(!entry) return res.status(400).json({status:false ,msg : "URL NOT FOUND"});
     return res.redirect(entry.redirectURL);
 }
 

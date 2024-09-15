@@ -4,32 +4,24 @@ import {useLocation, useNavigate } from 'react-router-dom';
 
 const Dashboard = ()=>{
     const navigate = useNavigate();    
-    const location = useLocation();
-    const sessionId = location.state?.sessionId;
+    const sessionId = localStorage.getItem('uid');
+    const [urls,updateUrls] = useState([]);
     
     const [userURL,updateUserURL] = useState({
         sessionId,
         redirectURL:"",
     });
-    const [urls,updateUrls] = useState([]);
+
     const getAllUrl = async ()=>{
-        try{
-        const response = await fetch("http://localhost:8000/url/url-shortener",{
+       fetch("http://localhost:8000/url/url-shortener",{
             method:"GET",
             headers:{
-                authorization : localStorage.getItem("uid")
+                Authorization : localStorage.getItem("uid")
             },
         })
-            const {status} = response;
-            if(status === 200){
-                const arr = await response.json();
-                updateUrls(arr);
-            }else{
-                navigate('/login')
-            }
-        }catch(error){
-            console.log("Error occur during fetching the urls : - ",error)
-        }
+        .then(res => res.json())
+        .then(res => updateUrls(res))
+        .catch(err=> console.log("Error in dashboard page : - " ,err))
     }
 
     useEffect(()=>{
@@ -40,7 +32,6 @@ const Dashboard = ()=>{
 
     const handleGenerateURL = async()=>{
         try{
-            console.log("I am here 1")
         const response = await fetch("http://localhost:8000/url/url-shortener",{
             method:"POST",
             headers:{
@@ -65,7 +56,11 @@ const Dashboard = ()=>{
         console.log("Error in dashboard while creating the short url : -",error);
     }
     }
-    console.log("I am here 2")
+
+    const navigateToViewDetailsPage =(val)=>{
+        console.log("Printing the response : -", val)
+        navigate(`/dashboard/view-details?short-id=${val.shortId}` , {state : {val}});
+    }
 
 
     return (
@@ -83,11 +78,15 @@ const Dashboard = ()=>{
             <div className="list_of_all_created_url">
                 <h2>Created url</h2>
                 <table>
+                    <thead>
                     <tr>
-                        <th>URL</th>
+                        <th>Original-URL</th>
                         <th>Short-URL</th>
-                        <th>NO. OF Clicks</th>
+                        <th>No. of clicks</th>
+                        <th>View Details</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     {
                         urls.map((val)=>{
                             return(
@@ -95,11 +94,12 @@ const Dashboard = ()=>{
                                 <td>{val.redirectURL}</td>
                                 <td>{val.shortId}</td>
                                 <td>{val.vistedHistory.length}</td>
+                                <td><button onClick={()=>navigateToViewDetailsPage(val)}>view</button></td>
                                 </tr>
                             )
                         })
                     }
-                    
+                    </tbody>
                 </table>
             </div>
         </div>
