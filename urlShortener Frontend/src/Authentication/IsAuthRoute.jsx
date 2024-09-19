@@ -8,7 +8,7 @@ const IsAuthRoute = (props) => {
 
   useEffect(() => {
     const authURL = "http://localhost:8000/url/url-shortener";
-    const authToken = localStorage.getItem("uid");
+    const authToken = localStorage.getItem("authToken");
     if (!authToken) {
       setIsAuthenticated(false);
       return;
@@ -16,7 +16,7 @@ const IsAuthRoute = (props) => {
     fetch(authURL, {
       method: "GET",
       headers: {
-        Authorization: authToken,
+        authorization: authToken,
       },
     })
       .then((res) => {

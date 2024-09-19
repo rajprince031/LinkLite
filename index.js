@@ -15,7 +15,7 @@ app.use(cookieParser())
 //connect with mongoDB
 connectMongoDB("mongodb://127.0.0.1:27017/url-shotener")
 .then(()=>{console.log("MongoDB connected successfully")})
-.catch((error)=>{console.log("error while connecting with MongoDB")})
+.catch((error)=>{console.log("error while connecting with MongoDB", error)})
 
 
 // Configure CORS to allow requests from your frontend

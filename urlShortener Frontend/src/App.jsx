@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Dashboard from "./component/DashboardPage";
 import IsAuthRoute from "./Authentication/IsAuthRoute";
 import ViewDetails from "./component/ViewDetails";
+import UserProfile from "./component/UserProfile";
 
 
 const App=()=>{
@@ -19,6 +20,7 @@ const App=()=>{
         </Routes>
         <IsAuthRoute path = "/dashboard" component = {Dashboard} />
         <IsAuthRoute path="/dashboard/view-details" component = {ViewDetails} />
+        <IsAuthRoute path="/dashboard/user-profile" component = {UserProfile} />
       </Router>
     </div>
   )

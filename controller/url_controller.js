@@ -1,13 +1,16 @@
 const URL = require("../models/url_models");
+const { findById } = require("../models/user_model");
 const { getUser } = require("../service/user_auth");
+
+
 //POST METHOD
 async function handleGenerateNewShortUrl(req, res) {
-  const { redirectURL, sessionId } = req.body;
+  const { redirectURL, authToken, activeStatus } = req.body;
   if (!redirectURL)
     return res
       .status(400)
       .json({ status: false, error: `Required field are missing` });
-  const user = getUser(sessionId);
+  const user = getUser(authToken);
   if (!user)
     return res.status(400).json({ status: false, error: "Access Denied" });
   const { nanoid } = await import("nanoid");
@@ -15,6 +18,7 @@ async function handleGenerateNewShortUrl(req, res) {
   await URL.create({
     shortId,
     redirectURL,
+    activeStatus,
     creator: user._id,
     vistedHistory: [],
   });
@@ -47,22 +51,51 @@ async function handleUrlRedirect(req, res) {
     },
     { new: true }
   );
-  if (!entry)
+  if (!entry || !entry?.activeStatus)
     return res.status(400).json({ status: false, msg: "URL NOT FOUND" });
-  console.log("Printing the ip address : -", req.ip);
+  
   return res.redirect(entry.redirectURL);
 }
 
 //GET ALL CREATED URL
 async function handleGetAllCreatedUrl(req, res) {
-  const uid = req.headers.authorization;
-  const { id: creator } = getUser(uid);
+  const authToken = req.headers.authorization;
+  const { _id: creator } = getUser(authToken);
   const allCreatedUrl = await URL.find({ creator });
   return res.status(200).json(allCreatedUrl);
 }
+
+//GET ALL DETAILS OF ONE CREATED URL
+async function handleGetAllDetailsOfOneCreatedUrl(req,res){
+  const {_id} = req.params;
+  const urlDetails = await URL.findById(_id);
+  if(!urlDetails) return res.status(400).json({error : "URL not found"})
+    return res.status(200).json({status : true , urlDetails})
+}
+
+
+//DELETE CREATED URL
+async function handleDeleteCreatedUrl(req,res){
+
+}
+
+//CHANGE ACTIVE STATUS CREATED URL
+async function handleChangeActiveStatusOfCreatedUrl(req,res){
+  const {activeStatus} = req.body;
+  const {_id} = req.params
+  const url = await URL.findOneAndUpdate({_id},{
+    activeStatus
+  })
+  console.log("I am ", _id,activeStatus,url)
+  return res.status(200).json({status:true, msg : "status changed successfully"})
+}
+
 
 module.exports = {
   handleGenerateNewShortUrl,
   handleUrlRedirect,
   handleGetAllCreatedUrl,
+  handleDeleteCreatedUrl,
+  handleChangeActiveStatusOfCreatedUrl,
+  handleGetAllDetailsOfOneCreatedUrl
 };

@@ -1,113 +1,167 @@
-import '../style/dashboardStyle.css';
-import {useEffect, useState} from 'react'
-import {useLocation, useNavigate } from 'react-router-dom'; 
+import "../style/dashboardStyle.css";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Dashboard = ()=>{
-    const navigate = useNavigate();    
-    const sessionId = localStorage.getItem('uid');
-    const [urls,updateUrls] = useState([]);
-    
-    const [userURL,updateUserURL] = useState({
-        sessionId,
-        redirectURL:"",
-    });
+const Dashboard = () => {
+  const navigate = useNavigate();
+  const authToken = localStorage.getItem("authToken");
+  const [urls, updateUrls] = useState([]);
 
-    const getAllUrl = async ()=>{
-       fetch("http://localhost:8000/url/url-shortener",{
-            method:"GET",
-            headers:{
-                Authorization : localStorage.getItem("uid")
-            },
-        })
-        .then(res => res.json())
-        .then(res => updateUrls(res))
-        .catch(err=> console.log("Error in dashboard page : - " ,err))
+  const [userURL, updateUserURL] = useState({
+    authToken,
+    redirectURL: "",
+    activeStatus: true,
+  });
+
+  const getAllUrl = async () => {
+    fetch("http://localhost:8000/url/url-shortener", {
+      method: "GET",
+      headers: {
+        authorization: localStorage.getItem("authToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => updateUrls(res))
+      .catch((err) => console.log("Error in dashboard page : - ", err));
+  };
+
+  useEffect(() => {
+    getAllUrl();
+  }, []);
+
+
+  const handleGenerateURL = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/url/url-shortener", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("authToken"),
+        },
+        body: JSON.stringify(userURL),
+      });
+      const { status } = response;
+      if (status === 201) {
+        alert("short url generated successfully");
+        getAllUrl();
+        updateUserURL({ ...userURL, redirectURL: "" });
+      } else if (status === 400) {
+        alert("Required field are missing");
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (error) {
+      console.log("Error in dashboard while creating the short url : -", error);
     }
+  };
 
-    useEffect(()=>{
-        getAllUrl()
-    },[])
+  const navigateToViewDetailsPage = (urlId) => {
+    navigate(`/dashboard/view-details`, { state: { urlId } });
+  };
 
-    
-
-    const handleGenerateURL = async()=>{
-        try{
-        const response = await fetch("http://localhost:8000/url/url-shortener",{
-            method:"POST",
-            headers:{
-                "Content-Type" : "application/json",
-                authorization : localStorage.getItem("uid")
-
-            },
-            body:JSON.stringify(userURL)
-        })
-        const {status} = response;
-        if(status === 201){
-            alert("short url generated successfully");
-            updateUserURL({...userURL,redirectURL:"",})
-            getAllUrl();
-        }else if(status === 400){
-            alert("Required field are missing")
-        }else{
-            alert("Something went wrong")
+  //Working of deletion and change active status
+  const changeTheStatusOfCreatedURL = async(_id, activeStatus) => {
+    try {
+        const data = {
+            activeStatus,
+          }
+          console.log(data)
+      const response = await fetch(
+        `http://localhost:8000/url/url-shortener/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authToken,
+          },
+          body: JSON.stringify(data),
         }
-
-    }catch(error){
-        console.log("Error in dashboard while creating the short url : -",error);
+    );
+        const {status} = response;
+        if(status === 200) getAllUrl()
+        else alert('Sonmething went wrong')
+    } catch (error) {
+        console.log("error while changing the status of the url : - ",error)
     }
-    }
+  };
+  const deleteTheCreatedShortURL = (id) => {
+    console.log("deletion of : -", id);
+  };
 
-    const navigateToViewDetailsPage =(details)=>{
-        console.log("Printing the response : -", details)
-        navigate(`/dashboard/view-details?short-id=${details.shortId}` , {state : {details}});
-    }
+  //profile vist
+  const vistToProfile = () => {
+    navigate("/dashboard/user-profile");
+  };
 
-
-    return (
-        <div className="main_dashboard_conatiner">
-            <h1>Hello I am Dashboard</h1>
-            <div className='generate_url_box'>
-                <label>Create short URL</label>
-                <input 
-                placeholder="Enter your url"
-                value={userURL.url}
-                onChange={e=>updateUserURL({...userURL,redirectURL:e.target.value})}
-                ></input>
-                <button onClick={handleGenerateURL}>Generate URL</button>
-            </div>
-            <div className="list_of_all_created_url">
-                <h2>Created url</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Original-URL</th>
-                        <th>Short-URL</th>
-                        <th>No. of clicks</th>
-                        <th>View Details</th>
-                        <th>Status</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        urls.map((val)=>{
-                            return(
-                                <tr>
-                                <td>{val.redirectURL}</td>
-                                <td>{val.shortId}</td>
-                                <td>{val.vistedHistory.length}</td>
-                                <td><button onClick={()=>navigateToViewDetailsPage(val)}>view</button></td>
-                                <td>{val.status}</td>
-                                <td><button>delete</button></td>
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    )
-}
+ 
+  return (
+    <div className="main_dashboard_conatiner">
+      <div className="navbar">
+        <h2 onClick={vistToProfile}>Profile</h2>
+      </div>
+      <h1>Hello I am Dashboard</h1>
+      <div className="generate_url_box">
+        <label>Create short URL</label>
+        <input
+          placeholder="Enter your url"
+          value={userURL.redirectURL}
+          onChange={(e) =>
+            updateUserURL({ ...userURL, redirectURL: e.target.value })
+          }
+        ></input>
+        <button onClick={handleGenerateURL}>Generate URL</button>
+      </div>
+      <h2>Created url</h2>
+      <div className="list_of_all_created_url">
+        <table>
+          <thead>
+            <tr>
+              <th>Original-URL</th>
+              <th>Short-URL</th>
+              <th>No. of clicks</th>
+              <th>View Details</th>
+              <th>Status</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {urls.map((val) => {
+              return (
+                <tr>
+                  <td>{val.redirectURL}</td>
+                  <td>{val.shortId}</td>
+                  <td>{val.vistedHistory.length}</td>
+                  <td>
+                    <button onClick={() => navigateToViewDetailsPage(val._id)}>
+                      view
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        changeTheStatusOfCreatedURL(val._id, !val.activeStatus)
+                      }
+                      style={
+                        (val.activeStatus && { backgroundColor: "green" }) ||
+                        (!val.activeStatus && { backgroundColor: "red" })
+                      }
+                    >
+                      {val.activeStatus ? "Active" : "Inactive"}
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => deleteTheCreatedShortURL(val._id)}>
+                      delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;

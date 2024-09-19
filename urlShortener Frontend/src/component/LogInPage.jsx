@@ -23,21 +23,19 @@ const LogInPage = () => {
                 body: JSON.stringify(user),
             });
             const { status } = response;
-            // console.log("I am printing the response status : -", response)
-            if (status === 400) alert("Required field are missing");
-            else if (status === 401) {
-                alert("Invalid eamil and password");
-            } else if (status === 200) {
+            if (status === 200) {
                 alert("Logged In Successfully");
-                const { sessionId } = await response.json();
-                localStorage.setItem("uid", sessionId);
+                const { authToken } = await response.json();
+                localStorage.setItem("authToken", authToken);
                 window.location.href =
                     pathname === "/dashboard" || !search
                         ? "/dashboard"
                         : `${pathname}${search}`;
-            } else {
-                alert("Something went wrong");
             }
+            else if (status === 401) alert("Invalid eamil and password");
+            else if (status === 400) alert("Required field are missing");
+            else alert("Something went wrong");
+
         } catch (error) {
             console.log("Error during LogIn : - ", error);
         }

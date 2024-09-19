@@ -1,6 +1,7 @@
 const user = require("../models/user_model");
 const {v4:uuidV4} = require('uuid');
-const {setUser} = require('../service/user_auth');
+const {setUser, getUser} = require('../service/user_auth');
+
 
 //SIGNUP HANDLER
 
@@ -33,13 +34,23 @@ async function handleLoginRequest(req,res){
     const findOneUser = await user.findOne({email,password});
     if(!findOneUser) return res.status(401).json({error:"User not found"});
 
-    const sessionId = uuidV4();
-    setUser(sessionId, findOneUser); // Map user to the session id
+    const authToken = setUser(findOneUser); // set jwt token
 
-    return res.status(200).json({success : true, msg : "Login Successfully", sessionId});
+    return res.status(200).json({success : true, msg : "Login Successfully", authToken});
+}
+
+// USER PROFILE
+
+async function handleUserProfile(req,res){
+    const authToken = req.headers.authorization;
+    const validateUser = getUser(authToken);
+    if(!validateUser) return res.status(401).json({error : "User not found"})
+        const userProfile =await user.findById({_id:validateUser._id})
+    return res.status(200).json({status : true , userProfile});
 }
 
 module.exports = {
     handleLoginRequest,
-    handleSignUpRequest
+    handleSignUpRequest,
+    handleUserProfile
 }

@@ -17,6 +17,10 @@ const urlSchema = Schema(
             ref: "User",
             require: true,
         },
+        activeStatus:{
+            type : Boolean,
+            default : false,
+        },
         vistedHistory: [
             { 
                 dateTime: { 
@@ -35,9 +39,6 @@ const urlSchema = Schema(
                 
             }
         ],
-        status:{
-            type : Boolean
-        }
     },
     { timestamps: true }
 );
