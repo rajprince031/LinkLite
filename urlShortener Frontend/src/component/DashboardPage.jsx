@@ -29,7 +29,7 @@ const Dashboard = () => {
     getAllUrl();
   }, []);
 
-
+  //handle the generate url
   const handleGenerateURL = async () => {
     try {
       const response = await fetch("http://localhost:8000/url/url-shortener", {
@@ -59,7 +59,7 @@ const Dashboard = () => {
     navigate(`/dashboard/view-details`, { state: { urlId } });
   };
 
-  //Working of deletion and change active status
+  //change active status
   const changeTheStatusOfCreatedURL = async(_id, activeStatus) => {
     try {
         const data = {
@@ -78,13 +78,40 @@ const Dashboard = () => {
         }
     );
         const {status} = response;
-        if(status === 200) getAllUrl()
+        if(status === 200) {
+          getAllUrl()
+          activeStatus ? alert('ShortURL is active') :  alert('ShortURL is Inactive');
+        }
         else alert('Sonmething went wrong')
     } catch (error) {
         console.log("error while changing the status of the url : - ",error)
     }
   };
-  const deleteTheCreatedShortURL = (id) => {
+
+  //deletion function
+  const deleteTheCreatedShortURL = async (id) => {
+    if(confirm('Are you sure ?')){
+      fetch(`http://localhost:8000/url/url-shortener/${id}`,{
+        method : "DELETE",
+        headers : {
+          Authorization : authToken
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        const {status,redirectURL,shortId} = res.deletedURL;
+        if(!status) alert('Something went wrong!!!')
+          else {
+        alert(`URL is deleted\nshortID : - ${shortId}\nOriginal URL :- ${redirectURL}`)
+        getAllUrl();
+      }
+      })
+      .catch(err => {
+        alert('something went wrong!!!')
+        console.log("Error while deleting the shortURL\n",err)
+      })
+      
+    }
     console.log("deletion of : -", id);
   };
 

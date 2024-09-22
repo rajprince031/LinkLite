@@ -76,7 +76,10 @@ async function handleGetAllDetailsOfOneCreatedUrl(req,res){
 
 //DELETE CREATED URL
 async function handleDeleteCreatedUrl(req,res){
-
+  const {_id} = req.params;
+  const deletedURL = await URL.findByIdAndDelete(_id);
+  if(!deletedURL) return res.status(400).json({error : "Url not found"})
+  return res.status(200).json({status : true , deletedURL})
 }
 
 //CHANGE ACTIVE STATUS CREATED URL
@@ -86,7 +89,6 @@ async function handleChangeActiveStatusOfCreatedUrl(req,res){
   const url = await URL.findOneAndUpdate({_id},{
     activeStatus
   })
-  console.log("I am ", _id,activeStatus,url)
   return res.status(200).json({status:true, msg : "status changed successfully"})
 }
 

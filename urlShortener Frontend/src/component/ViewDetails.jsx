@@ -4,7 +4,7 @@ import moment from "moment-timezone";
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
-  return date.tz("Asia/Kolkata").format("DD/MM/YYY - HH:mm:ss");
+  return date.tz("Asia/Kolkata").format("DD/MM/YYYY - HH:mm:ss");
 }
 
 const ViewDetails = () => {
@@ -47,7 +47,7 @@ const ViewDetails = () => {
             <br />
             <br />
             Original URL -{" "}
-            <a href={`${details.redirectURL}`}>{details.redirectURL}</a>
+            <a href={`${details.redirectURL}`} target='_blank'>{details.redirectURL}</a>
           </div>
         }
       </h5>
