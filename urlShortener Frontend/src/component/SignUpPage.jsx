@@ -1,6 +1,7 @@
 import '../style/signUpStyle.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { LOCALHOST_API } from '../utils/constant';
 
 const SingUpPage =()=>{
     const navigate = useNavigate();
@@ -12,10 +13,9 @@ const SingUpPage =()=>{
     });
 
     const handleSignUpRequest = async()=>{
-        console.log("I am here")
 
         try{
-        const response = await fetch("http://localhost:8000/user/signup",{
+        const response = await fetch(`${LOCALHOST_API}/user/signup`,{
             method:"POST",
             headers : {
                 'Content-Type' : 'application/json'

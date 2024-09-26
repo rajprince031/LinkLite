@@ -1,38 +1,58 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { LOCALHOST_API } from "../utils/constant";
+import '../style/UserProfile.css';
+import ChangePasswordDialogBox from "./ChangePasswordDialogBox";
 
-const UserProfile = ()=>{
+const UserProfile = () => {
 
     let [user, setUser] = useState({});
     let navigate = useNavigate();
-    useEffect(()=>{
-        user = fetch('http://localhost:8000/user/user-profile',{
-            method:"GET",
-            headers:{
-                authorization : localStorage.getItem('authToken')
+    useEffect(() => {
+        user = fetch(`${LOCALHOST_API}/user/user-profile`, {
+            method: "GET",
+            headers: {
+                authorization: localStorage.getItem('authToken')
             }
         })
-        .then((res)=>res.json())
-        .then(res=>{
-            console.log("Printing the user ",res.userProfile)
-            setUser(res.userProfile)
-            return res.userProfile
-        })
-        .catch(err=>{
-            console.log('something went wrong')
-        })
-    },[])
-    const handleLogoutRequest=()=>{
+            .then((res) => res.json())
+            .then(res => {
+                console.log("Printing the user ", res.userProfile)
+                setUser(res.userProfile)
+                return res.userProfile
+            })
+            .catch(err => {
+                console.log('something went wrong')
+            })
+    }, [])
+    const handleLogoutRequest = () => {
         localStorage.removeItem('authToken');
         navigate('/')
+    }
+    //Edit Profile
+    const handleEditProfileRequest=()=>{
+        return null;
+
     }
 
     return (
         <div className="main_user_profile_container">
-            <h3>First Name :- {user.firstName}</h3>
-            <h3>Last Name :- {user.lastName  || 'undefined'}</h3>
-            <h3>email :- {user.email}</h3>
-            <h3><button onClick={handleLogoutRequest}>Logout</button></h3>
+            <div>
+                <div>
+                    <h3>Name :- {user.fullName}</h3>
+                    <h3>Email :- {user.email}</h3>
+                </div>
+
+                <div className='buttons'>
+                    <button onClick={handleEditProfileRequest}>Edit Profile</button>
+                    <ChangePasswordDialogBox/>
+                </div>
+                
+                <br/>
+                <div className="logout_button">
+                    <button onClick={handleLogoutRequest}>Logout</button>
+                </div>
+            </div>
         </div>
     )
 }

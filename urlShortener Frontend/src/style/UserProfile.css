@@ -1,0 +1,22 @@
+.main_user_profile_container{
+    height: 100vh;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: black; */
+    backdrop-filter: 20;
+    z-index: 1000;
+}
+
+.buttons{
+    display : flex;
+    gap:10px
+}
+.buttons button:hover{
+    cursor: pointer;
+}
+
+.logout_button{
+    display: flex;
+    justify-content: center;
+}

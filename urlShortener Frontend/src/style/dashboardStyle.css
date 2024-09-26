@@ -32,6 +32,16 @@ table{
     text-align: center;
 }
 
+td{
+    max-width: 150px;
+}
+
+.redirectURL_container{
+    
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
  .navbar{
     width:100%;
     display: flex;

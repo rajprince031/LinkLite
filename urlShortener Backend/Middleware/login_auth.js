@@ -6,9 +6,10 @@ async function restrictToLoggedInUserOnly(req,res,next){
     
     const user = getUser(authToken);
     if(!user) return res.status(401).json({status : false, error : "User not found"});
-
+    req.body._id = user._id;
     next()
 }
+
 
 
 

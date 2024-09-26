@@ -3,6 +3,10 @@ const User = require("./user_model.js");
 const Schema = mongoose.Schema;
 const urlSchema = Schema(
     {
+        title : {
+            type: String,
+            required: true,
+        },
         shortId: {
             type: String,
             required: true,
@@ -33,9 +37,6 @@ const urlSchema = Schema(
                 hostname : {
                     type : String
                 },
-                method : {
-                    type : String
-                }
                 
             }
         ],

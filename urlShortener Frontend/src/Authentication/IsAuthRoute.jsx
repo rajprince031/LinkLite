@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation, Route, Routes, useNavigate } from "react-router-dom";
 import LogInPage from "../component/LogInPage";
-
+import {LOCALHOST_API} from '../utils/constant';
 const IsAuthRoute = (props) => {
   const { component: Component, path } = props;
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
-    const authURL = "http://localhost:8000/url/url-shortener";
+    const authURL = `${LOCALHOST_API}/url/url-shortener`;
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
       setIsAuthenticated(false);
@@ -20,7 +20,6 @@ const IsAuthRoute = (props) => {
       },
     })
       .then((res) => {
-        console.log("I am printing the response hello hello : -", res.status);
         if (res.status === 200) setIsAuthenticated(true);
         else setIsAuthenticated(false);
       })

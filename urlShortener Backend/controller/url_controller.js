@@ -5,8 +5,8 @@ const { getUser } = require("../service/user_auth");
 
 //POST METHOD
 async function handleGenerateNewShortUrl(req, res) {
-  const { redirectURL, authToken, activeStatus } = req.body;
-  if (!redirectURL)
+  const { redirectURL, authToken, activeStatus, title } = req.body;
+  if (!redirectURL || !title)
     return res
       .status(400)
       .json({ status: false, error: `Required field are missing` });
@@ -16,6 +16,7 @@ async function handleGenerateNewShortUrl(req, res) {
   const { nanoid } = await import("nanoid");
   const shortId = nanoid(8);
   await URL.create({
+    title,
     shortId,
     redirectURL,
     activeStatus,
@@ -25,13 +26,13 @@ async function handleGenerateNewShortUrl(req, res) {
 
   return res
     .status(201)
-    .json({ ststus: true, msg: "Short ID created successfully", id: shortId });
+    .json({ status: true, msg: "Short ID created successfully", id: shortId });
 }
 
 //REDIRECT URL
 async function handleUrlRedirect(req, res) {
   const { shortId } = req.params;
-  const { ip, hostname, method } = req;
+  const { ip, hostname} = req;
 
   if (!shortId)
     return res.status(400).json({ status: false, error: "url required!" });
@@ -44,15 +45,14 @@ async function handleUrlRedirect(req, res) {
         vistedHistory: {
           dateTime: new Date(),
           ip,
-          hostname,
-          method,
+          hostname
         },
       },
     },
     { new: true }
   );
   if (!entry || !entry?.activeStatus)
-    return res.status(400).json({ status: false, msg: "URL NOT FOUND" });
+    return res.status(400).json({ status: false, msg: "URL NOT FOUND!" });
   
   return res.redirect(entry.redirectURL);
 }

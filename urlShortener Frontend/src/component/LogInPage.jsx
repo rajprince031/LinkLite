@@ -1,7 +1,7 @@
 import "../style/logInStyle.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { LOCALHOST_API } from "../utils/constant";
 const LogInPage = () => {
     const navigate = useNavigate();
     const { pathname, search } = useLocation();
@@ -15,7 +15,7 @@ const LogInPage = () => {
 
     const handleLogInRequest = async () => {
         try {
-            const response = await fetch("http://localhost:8000/user/login", {
+            const response = await fetch(`${LOCALHOST_API}/user/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -27,13 +27,14 @@ const LogInPage = () => {
                 alert("Logged In Successfully");
                 const { authToken } = await response.json();
                 localStorage.setItem("authToken", authToken);
-                window.location.href =
+                window.location.replace(
                     pathname === "/dashboard" || !search
                         ? "/dashboard"
-                        : `${pathname}${search}`;
+                        : `${pathname}${search}`);
             }
-            else if (status === 401) alert("Invalid eamil and password");
-            else if (status === 400) alert("Required field are missing");
+            else if (status === 401) alert("Invalid email and password");
+            else if (status === 404) alert("User not found");
+            else if (status === 400) alert("Required field are missing...");
             else alert("Something went wrong");
 
         } catch (error) {

@@ -1,20 +1,24 @@
 import "../style/dashboardStyle.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { LOCALHOST_API } from '../utils/constant';
+
 
 const Dashboard = () => {
+  const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
   const [urls, updateUrls] = useState([]);
 
   const [userURL, updateUserURL] = useState({
+    title:"",
     authToken,
     redirectURL: "",
     activeStatus: true,
   });
 
   const getAllUrl = async () => {
-    fetch("http://localhost:8000/url/url-shortener", {
+    fetch(`${apiURL}/url/url-shortener`, {
       method: "GET",
       headers: {
         authorization: localStorage.getItem("authToken"),
@@ -32,7 +36,7 @@ const Dashboard = () => {
   //handle the generate url
   const handleGenerateURL = async () => {
     try {
-      const response = await fetch("http://localhost:8000/url/url-shortener", {
+      const response = await fetch(`${apiURL}/url/url-shortener`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +48,7 @@ const Dashboard = () => {
       if (status === 201) {
         alert("short url generated successfully");
         getAllUrl();
-        updateUserURL({ ...userURL, redirectURL: "" });
+        updateUserURL({ ...userURL, redirectURL:"", title:"" });
       } else if (status === 400) {
         alert("Required field are missing");
       } else {
@@ -97,14 +101,16 @@ const Dashboard = () => {
           Authorization : authToken
         }
       })
-      .then(res => res.json())
       .then(res => {
-        const {status,redirectURL,shortId} = res.deletedURL;
-        if(!status) alert('Something went wrong!!!')
-          else {
-        alert(`URL is deleted\nshortID : - ${shortId}\nOriginal URL :- ${redirectURL}`)
+        if(res.status === 200)return res.json();
+        return null;
+      })
+      .then(res => {
+        const {deletedURL} = res;
+        if(!deletedURL) return alert('Something went wrong!!!')
+          const {title,shortId,redirectURL} = deletedURL;
+        alert(`URL is deleted\nTitle : - ${title}\nshortID : - ${shortId}\nOriginal URL :- ${redirectURL}`)
         getAllUrl();
-      }
       })
       .catch(err => {
         alert('something went wrong!!!')
@@ -112,7 +118,6 @@ const Dashboard = () => {
       })
       
     }
-    console.log("deletion of : -", id);
   };
 
   //profile vist
@@ -130,6 +135,11 @@ const Dashboard = () => {
       <div className="generate_url_box">
         <label>Create short URL</label>
         <input
+         placeholder="Enter title"
+         value={userURL.title}
+         onChange={e=>updateUserURL({...userURL,title:e.target.value})}
+         ></input>
+        <input
           placeholder="Enter your url"
           value={userURL.redirectURL}
           onChange={(e) =>
@@ -143,6 +153,7 @@ const Dashboard = () => {
         <table>
           <thead>
             <tr>
+              <th>Title</th>
               <th>Original-URL</th>
               <th>Short-URL</th>
               <th>No. of clicks</th>
@@ -155,7 +166,8 @@ const Dashboard = () => {
             {urls.map((val) => {
               return (
                 <tr>
-                  <td>{val.redirectURL}</td>
+                  <td>{val.title}</td>
+                  <td className="redirectURL_container">{val.redirectURL}</td>
                   <td>{val.shortId}</td>
                   <td>{val.vistedHistory.length}</td>
                   <td>
@@ -178,7 +190,7 @@ const Dashboard = () => {
                   </td>
                   <td>
                     <button onClick={() => deleteTheCreatedShortURL(val._id)}>
-                      delete
+                      Delete
                     </button>
                   </td>
                 </tr>

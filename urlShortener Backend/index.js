@@ -6,9 +6,10 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const {restrictToLoggedInUserOnly} = require("./Middleware/login_auth");
 const { redirectRoute } = require("./routes/redirect_url_route");
+const authLoginRoute = require("./routes/auth_isLogin")
+require('dotenv').config()
 
-
-const PORT = 8000;
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(cookieParser())
@@ -20,7 +21,7 @@ connectMongoDB("mongodb://127.0.0.1:27017/url-shotener")
 
 // Configure CORS to allow requests from your frontend
 app.use(cors({
-    origin: 'http://localhost:5173',  // Allow requests from this origin
+    origin: process.env.frontend_URL,  // Allow requests from this origin
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],         // Allow specific methods
     credentials:true
     // allowedHeaders: ['Content-Type']  // Allow specific headers
@@ -34,11 +35,12 @@ app.use(express.urlencoded({extended:false}))
 
 //Routes
 app.use('/',redirectRoute)
+app.use('/auth',restrictToLoggedInUserOnly,authLoginRoute)
 app.use('/url', restrictToLoggedInUserOnly, urlRoutes);
 app.use('/user',userRoutes);
 
 app.listen(PORT,()=>{
-    console.log(`Server is running at ${PORT}\nhttp://localhost:${PORT}`);
+    console.log(`Server is running at ${PORT}\n${process.env.localhost_URL}`);
 })
 
 

@@ -1,6 +1,7 @@
 import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, React, useState } from "react";
 import moment from "moment-timezone";
+import { LOCALHOST_API } from "../utils/constant";
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
@@ -19,7 +20,7 @@ const ViewDetails = () => {
   });
   console.log("I am printing the state : -", urlId);
   const getAllDeatils = () => {
-    fetch(`http://localhost:8000/url/url-shortener/${urlId}`, {
+    fetch(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
       method: "GET",
       headers: {
         authorization: localStorage.getItem("authToken"),
@@ -37,17 +38,21 @@ const ViewDetails = () => {
 
   return (
     <div className="main_view_details_conatiner">
+      <h2>Details</h2>
       <h5>
         {
           <div>
-            Short url -{" "}
-            <a href={`http://localhost:8000/${details.shortId}`}>
+            Title - {details.title}
+            <br />
+            <br />
+            Short url - 
+            <a href={`${LOCALHOST_API}/${details.shortId}`}>
               {details.shortId}
             </a>
             <br />
             <br />
-            Original URL -{" "}
-            <a href={`${details.redirectURL}`} target='_blank'>{details.redirectURL}</a>
+            Original URL - {" "}
+            <a href={`${details.redirectURL}`}>{details.redirectURL}</a>
           </div>
         }
       </h5>

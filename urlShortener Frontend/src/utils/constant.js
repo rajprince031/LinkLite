@@ -1,0 +1,1 @@
+export const LOCALHOST_API = "http://localhost:8000"
