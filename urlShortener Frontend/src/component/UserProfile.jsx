@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LOCALHOST_API } from "../utils/constant";
 import '../style/UserProfile.css';
 import ChangePasswordDialogBox from "./ChangePasswordDialogBox";
+import UpdateProfile from "./UpdateProfile";
 
 const UserProfile = () => {
 
@@ -17,23 +18,18 @@ const UserProfile = () => {
         })
             .then((res) => res.json())
             .then(res => {
-                console.log("Printing the user ", res.userProfile)
                 setUser(res.userProfile)
                 return res.userProfile
             })
             .catch(err => {
-                console.log('something went wrong')
+                alert('something went wrong')
             })
-    }, [])
+    }, [user])
     const handleLogoutRequest = () => {
         localStorage.removeItem('authToken');
         navigate('/')
     }
-    //Edit Profile
-    const handleEditProfileRequest=()=>{
-        return null;
-
-    }
+    
 
     return (
         <div className="main_user_profile_container">
@@ -44,7 +40,7 @@ const UserProfile = () => {
                 </div>
 
                 <div className='buttons'>
-                    <button onClick={handleEditProfileRequest}>Edit Profile</button>
+                    <UpdateProfile fName={user.firstName} lName={user.lastName} eMail={user.email}/>
                     <ChangePasswordDialogBox/>
                 </div>
                 

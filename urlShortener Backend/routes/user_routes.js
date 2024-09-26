@@ -15,5 +15,6 @@ router.post('/signup',validateSignUpDetails,ValidatePassword,handleSignUpRequest
 router.post('/login',handleLoginRequest);
 router.get('/user-profile',restrictToLoggedInUserOnly, handleUserProfile);
 router.patch('/user-profile/change-password',restrictToLoggedInUserOnly,ValidateChangePassword, handleChangePassword);
+router.patch('/user-profile/update-profile',restrictToLoggedInUserOnly, handleProfileUpdate);
 
 module.exports = router;

@@ -26,7 +26,10 @@ const Dashboard = () => {
     })
       .then((res) => res.json())
       .then((res) => updateUrls(res))
-      .catch((err) => console.log("Error in dashboard page : - ", err));
+      .catch((err) =>{ 
+        alert('Something went wrong')
+        // console.log("Error in dashboard page : - ", err)
+      });
   };
 
   useEffect(() => {
@@ -55,7 +58,8 @@ const Dashboard = () => {
         alert("Something went wrong");
       }
     } catch (error) {
-      console.log("Error in dashboard while creating the short url : -", error);
+      alert('Something went wrong')
+      // console.log("Error in dashboard while creating the short url : -", error);
     }
   };
 
@@ -69,9 +73,8 @@ const Dashboard = () => {
         const data = {
             activeStatus,
           }
-          console.log(data)
       const response = await fetch(
-        `http://localhost:8000/url/url-shortener/${_id}`,
+        `${LOCALHOST_API}/url/url-shortener/${_id}`,
         {
           method: "PATCH",
           headers: {
@@ -88,14 +91,15 @@ const Dashboard = () => {
         }
         else alert('Sonmething went wrong')
     } catch (error) {
-        console.log("error while changing the status of the url : - ",error)
+      alert('Sonmething went wrong')
+        // console.log("error while changing the status of the url : - ",error)
     }
   };
 
   //deletion function
   const deleteTheCreatedShortURL = async (id) => {
     if(confirm('Are you sure ?')){
-      fetch(`http://localhost:8000/url/url-shortener/${id}`,{
+      fetch(`${LOCALHOST_API}/url/url-shortener/${id}`,{
         method : "DELETE",
         headers : {
           Authorization : authToken
@@ -114,7 +118,7 @@ const Dashboard = () => {
       })
       .catch(err => {
         alert('something went wrong!!!')
-        console.log("Error while deleting the shortURL\n",err)
+        // console.log("Error while deleting the shortURL\n",err)
       })
       
     }

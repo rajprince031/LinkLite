@@ -35,7 +35,8 @@ const SingUpPage =()=>{
             alert("Something went wrong try again");
         }
         }catch(error){
-            console.log("Error occur during signup",error);
+            alert("Something went wrong try again");
+            // console.log("Error occur during signup",error);
         }
     }
     const moveToLogInPage =()=>{

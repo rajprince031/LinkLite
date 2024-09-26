@@ -18,7 +18,6 @@ const ViewDetails = () => {
     redirectURL: "",
     vistedHistory: [],
   });
-  console.log("I am printing the state : -", urlId);
   const getAllDeatils = () => {
     fetch(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
       method: "GET",
@@ -28,13 +27,15 @@ const ViewDetails = () => {
     })
       .then((res) => res.json())
       .then((res) => setDetails(res.urlDetails))
-      .catch((err) => console.log("error occur :- ", err));
+      .catch((err) => {
+        alert('Something went wrong')
+        // console.log("error occur :- ", err)
+  });
   };
   useEffect(() => {
     getAllDeatils();
   }, []);
 
-  console.log("dEtails : -", details);
 
   return (
     <div className="main_view_details_conatiner">

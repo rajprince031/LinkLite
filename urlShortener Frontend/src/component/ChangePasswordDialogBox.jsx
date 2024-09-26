@@ -8,6 +8,9 @@ const ChangePasswordDialogBox=()=>{
         newPassword:"",
         confirmNewPassword:""
     });
+
+
+
     const handleSavePassword=()=>{
 
         if(pass.newPassword !== pass.confirmNewPassword){
@@ -26,21 +29,35 @@ const ChangePasswordDialogBox=()=>{
             })
         })
         .then(async (res)=>{
-            console.log(res)
             const {status} = res;
             if(status!=200){
                 res = await res.json()
                  return alert(res.error)
             }
                 setIsOpen(false);
+                updatePassword({
+                    password:"",
+                    newPassword:"",
+                    confirmNewPassword:""
+                })
                 return alert('Password updated successfully')
 
         })
     }
 
+
+    const handleCloseDialogBox =()=>{
+        setIsOpen(false);
+                updatePassword({
+                    password:"",
+                    newPassword:"",
+                    confirmNewPassword:""
+                })
+    }
+
     return(
         <div className="main_dialog_box_conatiner">
-            <button onClick={()=>setIsOpen(true)}> Change Password</button>
+            <button onClick={()=>setIsOpen(true)}> Change Password </button>
 
             {
                 isOpen &&
@@ -70,7 +87,7 @@ const ChangePasswordDialogBox=()=>{
 
                         <div className="button_container">
                             <button onClick={handleSavePassword}>save Password</button>
-                            <button onClick={()=>setIsOpen(false)}>close</button>
+                            <button onClick={handleCloseDialogBox}>close</button>
                         </div>
                     </div>
                 </div>

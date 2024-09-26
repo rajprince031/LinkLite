@@ -20,10 +20,8 @@ const HomePage=()=>{
             return updateIsLogin(false)
 
         }).catch(err =>{
-            console.log("Something went wrong in Home Page")
             return updateIsLogin(false) 
         })
-        console.log("Print",isLogin)
 
     },[])
     const action = ()=>{
