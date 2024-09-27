@@ -8,6 +8,13 @@
     gap:20px;
 }
 
+.details_history_bar{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70vw;
+}
+
 .list_of_all_created_url{
     width:90vw;
     display: flex;
@@ -15,9 +22,15 @@
     justify-content: space-between;
     gap:5px;
 }
+.search_box{
+    display: flex;
+    flex-direction: row;
+    gap:10px
+}
 
 
 table{
     text-align: center;
     justify-content: space-between;
 }
+

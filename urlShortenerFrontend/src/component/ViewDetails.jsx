@@ -2,6 +2,7 @@ import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, React, useState } from "react";
 import moment from "moment-timezone";
 import { LOCALHOST_API } from "../utils/constant";
+import '../style/viewdetailsStyle.css'
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
@@ -12,12 +13,18 @@ const ViewDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [urlId, setUrlId] = useState(location.state?.urlId);
+  const [ipAddress, updateIpAddress] = useState();
+  const [showAllUser,setShowAllUser] = useState(false);
   if (!urlId) navigate("/dashboard");
+
+
   const [details, setDetails] = useState({
     shortId: "",
     redirectURL: "",
     vistedHistory: [],
   });
+
+  const [filterIp,updatefilterIP] = useState([])
   const getAllDeatils = () => {
     fetch(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
       method: "GET",
@@ -30,10 +37,25 @@ const ViewDetails = () => {
       .catch((err) => {
         alert('Something went wrong')
         // console.log("error occur :- ", err)
-  });
+      });
   };
+
+
+  const filterUser =()=>{
+    updateIpAddress("")
+    if(!ipAddress || ipAddress.trim() === ""){
+       return alert('search box empty')
+    }
+    const arr = filterIp.filter((val)=>val.ip == ipAddress.trim())
+    if(arr.length==0) {
+      return alert(`${ipAddress.trim()} not found`)
+    }
+    return setDetails({...details,vistedHistory:arr});
+  }
+
   useEffect(() => {
     getAllDeatils();
+    updatefilterIP(details.vistedHistory);
   }, []);
 
 
@@ -46,7 +68,7 @@ const ViewDetails = () => {
             Title - {details.title}
             <br />
             <br />
-            Short url - 
+            Short url -
             <a href={`${LOCALHOST_API}/${details.shortId}`}>
               {details.shortId}
             </a>
@@ -57,14 +79,23 @@ const ViewDetails = () => {
           </div>
         }
       </h5>
-      <h2>Visted History</h2>
+      <div className="details_history_bar">
+        <h>Visted History</h>
+        <div className="search_box">
+          <input
+            placeholder="search"
+            value={ipAddress}
+            onChange={e => updateIpAddress(e.target.value )}
+          ></input>
+          <button onClick={filterUser}>search</button>
+        </div>
+      </div>
       <div className="list_of_all_created_url">
         <table>
           <thead>
             <tr>
               <th>Date - Time</th>
               <th>Hostname</th>
-              <th>Method</th>
               <th>IP Address</th>
             </tr>
           </thead>
@@ -74,7 +105,6 @@ const ViewDetails = () => {
                 <tr>
                   <td>{formatTime(val.dateTime)}</td>
                   <td>{val.hostname}</td>
-                  <td>{val.method}</td>
                   <td>{val.ip}</td>
                 </tr>
               );
