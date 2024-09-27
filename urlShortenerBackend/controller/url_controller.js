@@ -1,7 +1,7 @@
+const { default: axios } = require("axios");
 const URL = require("../models/url_models");
 const { findById } = require("../models/user_model");
 const { getUser } = require("../service/user_auth");
-
 
 //POST METHOD
 async function handleGenerateNewShortUrl(req, res) {
@@ -31,30 +31,40 @@ async function handleGenerateNewShortUrl(req, res) {
 
 //REDIRECT URL
 async function handleUrlRedirect(req, res) {
-  const { shortId } = req.params;
-  const { ip, hostname} = req;
+  try {
+    const { shortId } = req.params;
+    const { ip, hostname } = req;
 
-  if (!shortId)
-    return res.status(400).json({ status: false, error: "url required!" });
-  const entry = await URL.findOneAndUpdate(
-    {
-      shortId,
-    },
-    {
-      $push: {
-        vistedHistory: {
-          dateTime: new Date(),
-          ip,
-          hostname
+    if (!shortId)
+      return res.status(400).json({ status: false, error: "url required!" });
+
+    const entry = await URL.findOne({ shortId });
+    if (!entry || !entry?.activeStatus)
+      return res.status(400).json({ status: false, msg: "URL NOT FOUND!" });
+
+    const response = await axios.head(entry.redirectURL);
+    if (response.status >= 200 && response.status < 300) {
+      await URL.findOneAndUpdate(
+        {
+          shortId,
         },
-      },
-    },
-    { new: true }
-  );
-  if (!entry || !entry?.activeStatus)
-    return res.status(400).json({ status: false, msg: "URL NOT FOUND!" });
-  
-  return res.redirect(entry.redirectURL);
+        {
+          $push: {
+            vistedHistory: {
+              dateTime: new Date(),
+              ip,
+              hostname,
+            },
+          },
+        },
+        { new: true }
+      );
+    }
+    return res.redirect(entry.redirectURL);
+  } catch (err) {
+    // console.log(err)
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 //GET ALL CREATED URL
@@ -66,32 +76,35 @@ async function handleGetAllCreatedUrl(req, res) {
 }
 
 //GET ALL DETAILS OF ONE CREATED URL
-async function handleGetAllDetailsOfOneCreatedUrl(req,res){
-  const {_id} = req.params;
+async function handleGetAllDetailsOfOneCreatedUrl(req, res) {
+  const { _id } = req.params;
   const urlDetails = await URL.findById(_id);
-  if(!urlDetails) return res.status(400).json({error : "URL not found"})
-    return res.status(200).json({status : true , urlDetails})
+  if (!urlDetails) return res.status(400).json({ error: "URL not found" });
+  return res.status(200).json({ status: true, urlDetails });
 }
 
-
 //DELETE CREATED URL
-async function handleDeleteCreatedUrl(req,res){
-  const {_id} = req.params;
+async function handleDeleteCreatedUrl(req, res) {
+  const { _id } = req.params;
   const deletedURL = await URL.findByIdAndDelete(_id);
-  if(!deletedURL) return res.status(400).json({error : "Url not found"})
-  return res.status(200).json({status : true , deletedURL})
+  if (!deletedURL) return res.status(400).json({ error: "Url not found" });
+  return res.status(200).json({ status: true, deletedURL });
 }
 
 //CHANGE ACTIVE STATUS CREATED URL
-async function handleChangeActiveStatusOfCreatedUrl(req,res){
-  const {activeStatus} = req.body;
-  const {_id} = req.params
-  const url = await URL.findOneAndUpdate({_id},{
-    activeStatus
-  })
-  return res.status(200).json({status:true, msg : "status changed successfully"})
+async function handleChangeActiveStatusOfCreatedUrl(req, res) {
+  const { activeStatus } = req.body;
+  const { _id } = req.params;
+  const url = await URL.findOneAndUpdate(
+    { _id },
+    {
+      activeStatus,
+    }
+  );
+  return res
+    .status(200)
+    .json({ status: true, msg: "status changed successfully" });
 }
-
 
 module.exports = {
   handleGenerateNewShortUrl,
@@ -99,5 +112,5 @@ module.exports = {
   handleGetAllCreatedUrl,
   handleDeleteCreatedUrl,
   handleChangeActiveStatusOfCreatedUrl,
-  handleGetAllDetailsOfOneCreatedUrl
+  handleGetAllDetailsOfOneCreatedUrl,
 };

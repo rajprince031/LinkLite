@@ -33,7 +33,10 @@ const ViewDetails = () => {
       },
     })
       .then((res) => res.json())
-      .then((res) => setDetails(res.urlDetails))
+      .then((res) => {
+        setDetails(res.urlDetails)
+        updatefilterIP(res.urlDetails.vistedHistory)
+      })
       .catch((err) => {
         alert('Something went wrong')
         // console.log("error occur :- ", err)
@@ -46,16 +49,15 @@ const ViewDetails = () => {
     if(!ipAddress || ipAddress.trim() === ""){
        return alert('search box empty')
     }
-    const arr = filterIp.filter((val)=>val.ip == ipAddress.trim())
-    if(arr.length==0) {
+    const arr = details.vistedHistory.filter((val)=>val.ip == ipAddress.trim())
+    if(arr.length===0) {
       return alert(`${ipAddress.trim()} not found`)
     }
-    return setDetails({...details,vistedHistory:arr});
+    return updatefilterIP(arr);
   }
 
   useEffect(() => {
     getAllDeatils();
-    updatefilterIP(details.vistedHistory);
   }, []);
 
 
@@ -100,7 +102,7 @@ const ViewDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {details.vistedHistory.map((val) => {
+            {filterIp.map((val) => {
               return (
                 <tr>
                   <td>{formatTime(val.dateTime)}</td>
