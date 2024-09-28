@@ -47,13 +47,13 @@ const LogInPage = () => {
             <h1>Hello I am LogIn Page</h1>
             <label>Email Address</label>
             <input
-                palceholder="Email Address"
+                placeholder="Email Address"
                 value={user.email}
                 onChange={(e) => updateUser({ ...user, email: e.target.value })}
             ></input>
             <label>Password</label>
             <input
-                palceholder="Password"
+                placeholder="Password"
                 value={user.password}
                 onChange={(e) => updateUser({ ...user, password: e.target.value })}
             ></input>
