@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { LOCALHOST_API } from "../utils/constant";
 
 const UpdateProfile = ({fName,lName,eMail}) => {
+    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const [isOpen, setIsOpen] = useState(false);
     const [user, updateUser] = useState({
         firstName:fName,

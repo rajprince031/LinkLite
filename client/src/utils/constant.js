@@ -1,1 +1,0 @@
-export const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API

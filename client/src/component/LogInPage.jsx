@@ -1,8 +1,8 @@
 import "../style/logInStyle.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { LOCALHOST_API } from "../utils/constant";
 const LogInPage = () => {
+    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const navigate = useNavigate();
     const { pathname, search } = useLocation();
     const [user, updateUser] = useState({

@@ -1,10 +1,10 @@
 import "../style/dashboardStyle.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LOCALHOST_API } from '../utils/constant';
 
 
 const Dashboard = () => {
+  const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
   const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");

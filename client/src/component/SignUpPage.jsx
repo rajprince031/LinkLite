@@ -1,9 +1,10 @@
 import '../style/signUpStyle.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { LOCALHOST_API } from '../utils/constant';
 
 const SingUpPage =()=>{
+    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
+
     const navigate = useNavigate();
     const [user ,updateUser] = useState({
         firstName : "",

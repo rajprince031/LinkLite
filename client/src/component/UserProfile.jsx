@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { LOCALHOST_API } from "../utils/constant";
 import '../style/UserProfile.css';
 import ChangePasswordDialogBox from "./ChangePasswordDialogBox";
 import UpdateProfile from "./UpdateProfile";
 
 const UserProfile = () => {
+    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
+
 
     let [user, setUser] = useState({});
     let navigate = useNavigate();

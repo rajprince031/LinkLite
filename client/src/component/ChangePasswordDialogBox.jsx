@@ -1,7 +1,7 @@
 import { useState } from "react";
 import '../style/changePasswordDialogBox.css'
-import { LOCALHOST_API } from "../utils/constant";
 const ChangePasswordDialogBox=()=>{
+    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const [isOpen,setIsOpen] = useState(false);
     const [pass, updatePassword]=useState({
         password:"",

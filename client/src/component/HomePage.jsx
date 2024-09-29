@@ -1,9 +1,9 @@
 
 import '../style/homeStyle.css';
 import {useNavigate} from 'react-router-dom';
-import { LOCALHOST_API } from '../utils/constant';
 import { useState, useEffect } from 'react';
 const HomePage=()=>{
+    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const navigate = useNavigate();
     const [isLogin, updateIsLogin] = useState(null)
     useEffect(()=>{

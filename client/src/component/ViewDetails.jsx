@@ -1,7 +1,6 @@
 import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, React, useState } from "react";
 import moment from "moment-timezone";
-import { LOCALHOST_API } from "../utils/constant";
 import '../style/viewDetailsStyle.css'
 
 function formatTime(DateString) {
@@ -10,6 +9,8 @@ function formatTime(DateString) {
 }
 
 const ViewDetails = () => {
+  const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
+
   const navigate = useNavigate();
   const location = useLocation();
   const [urlId, setUrlId] = useState(location.state?.urlId);

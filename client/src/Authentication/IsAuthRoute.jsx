@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, Route, Routes, useNavigate } from "react-router-dom";
 import LogInPage from "../component/LogInPage";
-import {LOCALHOST_API} from '../utils/constant';
 const IsAuthRoute = (props) => {
   const { component: Component, path } = props;
+  const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
+
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
