@@ -19,7 +19,11 @@ connectMongoDB(process.env.MONGODB_URI)
 
 
 // Configure CORS to allow requests from your frontend
-app.use(cors());
+app.use(cors({
+  origin:"https://linklite-rajprince031.vercel.app",
+  methods:["POST","GET","PATCH","DELETE"],
+  credentials: true
+}));
   
 //MiddleWare
 
