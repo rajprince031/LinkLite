@@ -12,6 +12,7 @@ require('dotenv').config()
 const PORT = process.env.PORT || 10000;
 
 const app = express();
+app.set('trust proxy',true);
 app.use(cookieParser())
 //connect with mongoDB
 connectMongoDB(process.env.MONGODB_URI)

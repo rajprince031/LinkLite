@@ -33,7 +33,8 @@ async function handleGenerateNewShortUrl(req, res) {
 async function handleUrlRedirect(req, res) {
   try {
     const { shortId } = req.params;
-    const { ip, hostname } = req;
+     const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress || req.ip;
+    const hostname = req.hostname;
 
     if (!shortId)
       return res.status(400).json({ status: false, error: "url required!" });
