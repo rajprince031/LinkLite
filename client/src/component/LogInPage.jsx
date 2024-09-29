@@ -17,6 +17,7 @@ const LogInPage = () => {
         try {
             const response = await fetch(`${LOCALHOST_API}/user/login`, {
                 method: "POST",
+                mode:'cors',
                 headers: {
                     "Content-Type": "application/json",
                 },
