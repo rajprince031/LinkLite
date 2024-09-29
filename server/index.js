@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 10000;
 const app = express();
 app.use(cookieParser())
 //connect with mongoDB
-connectMongoDB("mongodb://127.0.0.1:27017/url-shotener")
+connectMongoDB(process.env.MONGODB_URI)
 
 
 
