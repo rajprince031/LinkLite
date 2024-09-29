@@ -1,1 +1,1 @@
-export const LOCALHOST_API = "http://localhost:8000"
+export const LOCALHOST_API = "https://linklite-server.vercel.app"
