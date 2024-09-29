@@ -19,12 +19,7 @@ connectMongoDB(process.env.MONGODB_URI)
 
 
 // Configure CORS to allow requests from your frontend
-app.use(cors({
-    origin: process.env.frontend_URL,  // Allow requests from this origin
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],         // Allow specific methods
-    credentials:true
-    // allowedHeaders: ['Content-Type']  // Allow specific headers
-  }));
+app.use(cors());
   
 //MiddleWare
 
