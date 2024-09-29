@@ -1,1 +1,1 @@
-export const LOCALHOST_API = "https://linklite-server.vercel.app"
+export const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API
