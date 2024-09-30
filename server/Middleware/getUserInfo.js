@@ -36,7 +36,7 @@ async function getAllUserInfo(req, res, next) {
         browserVersion: deviceDetails.version, // Browser version
       }
       req.entry = entry;
-      console.log(req.userDetails)
+      //console.log(req.userDetails)
       return next();
     }
     return res.status(404).json({error : "Page Not Found"})
