@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser')
 const {restrictToLoggedInUserOnly} = require("./Middleware/login_auth");
 const { redirectRoute } = require("./routes/redirect_url_route");
 const authLoginRoute = require("./routes/auth_isLogin")
+const userAgent = require("express-useragent");
+
 require('dotenv').config()
 
 const PORT = process.env.PORT || 10000;
@@ -14,6 +16,10 @@ const PORT = process.env.PORT || 10000;
 const app = express();
 app.set('trust proxy',true);
 app.use(cookieParser())
+app.use(userAgent.express())
+
+
+
 //connect with mongoDB
 connectMongoDB(process.env.MONGODB_URI)
 

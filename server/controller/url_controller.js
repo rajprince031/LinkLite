@@ -32,39 +32,48 @@ async function handleGenerateNewShortUrl(req, res) {
 //REDIRECT URL
 async function handleUrlRedirect(req, res) {
   try {
-    const { shortId } = req.params;
-     const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress || req.ip;
-    const hostname = req.hostname;
+    
+    const {_id,redirectURL} = req.entry;
+    const {
+      ip,
+      browser,
+      version,
+      os,
+      platform,
+      source,
+      isMobile,
+      isTablet,
+      isDesktop,
+      isBot,
+      browserVersion,
+    } = req.userDetails;
 
-    if (!shortId)
-      return res.status(400).json({ status: false, error: "url required!" });
-
-    const entry = await URL.findOne({ shortId });
-    if (!entry || !entry?.activeStatus)
-      return res.status(400).json({ status: false, msg: "URL NOT FOUND!" });
-
-    const response = await axios.head(entry.redirectURL);
-    if (response.status >= 200 && response.status < 300) {
-      await URL.findOneAndUpdate(
-        {
-          shortId,
-        },
-        {
-          $push: {
-            vistedHistory: {
-              dateTime: new Date(),
-              ip,
-              hostname,
-            },
+    await URL.findByIdAndUpdate(
+      _id,
+      {
+        $push: {
+          vistedHistory: {
+            dateTime: new Date(),
+            ip,
+            browser,
+            version,
+            os,
+            platform,
+            source,
+            isMobile,
+            isTablet,
+            isDesktop,
+            isBot,
+            browserVersion,
           },
         },
-        { new: true }
-      );
-    }
-    return res.redirect(entry.redirectURL);
+      },
+      { new: true }
+    );
+    return res.redirect(redirectURL);
   } catch (err) {
-    // console.log(err)
-    return res.status(500).json({ error: "Internal server error" });
+    console.log("main",err)
+    return res.status(500).json({ error: "Internal server error!" });
   }
 }
 

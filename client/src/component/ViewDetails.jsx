@@ -2,6 +2,7 @@ import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, React, useState } from "react";
 import moment from "moment-timezone";
 import '../style/viewDetailsStyle.css'
+import ViewUrlDetails from "./ViewUrlDetails";
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
@@ -37,6 +38,7 @@ const ViewDetails = () => {
       .then((res) => {
         setDetails(res.urlDetails)
         updatefilterIP(res.urlDetails.vistedHistory)
+        console.log(details.vistedHistory)
       })
       .catch((err) => {
         alert('Something went wrong')
@@ -83,10 +85,10 @@ const ViewDetails = () => {
         }
       </h5>
       <div className="details_history_bar">
-        <h>Visted History</h>
+        Visted History
         <div className="search_box">
           <input
-            placeholder="search"
+            placeholder="search ip"
             value={ipAddress}
             onChange={e => updateIpAddress(e.target.value )}
           ></input>
@@ -97,18 +99,32 @@ const ViewDetails = () => {
         <table>
           <thead>
             <tr>
-              <th>Date - Time</th>
-              <th>Hostname</th>
               <th>IP Address</th>
+              <th>Platfrom</th>
+              <th>Browser</th>
+              <th>Time</th>
+              <th>Date</th>
+              <th>Full Details</th>
             </tr>
           </thead>
           <tbody>
             {filterIp.map((val) => {
+              const { 
+                dateTime,
+                ip,
+                browser,
+                platform,
+                } = val
+
+                const [Date,Time] = formatTime(dateTime).split(" - ")
               return (
                 <tr>
-                  <td>{formatTime(val.dateTime)}</td>
-                  <td>{val.hostname}</td>
-                  <td>{val.ip}</td>
+                  <td>{ip}</td>
+                  <td>{platform}</td>
+                  <td>{browser}</td>
+                  <td>{Date}</td>
+                  <td>{Time}</td>
+                  <td><ViewUrlDetails userDetails = {val}/></td>
                 </tr>
               );
             })}
