@@ -1,9 +1,17 @@
+import axios from "axios";
 import "../style/dashboardStyle.css";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import { toast } from "react-toastify";
+import DeleteCreatedURL from "./DeleteCreatedURL";
+import ChangeActiveStatusOfURL from "./ChangeActiveStatusOfURL";
+import { useSelector } from "react-redux";
 
 
 const Dashboard = () => {
+
+  const details = useSelector(state=>state);
+  console.log('Details time :- ', details)
   const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
   const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
@@ -11,125 +19,75 @@ const Dashboard = () => {
   const [urls, updateUrls] = useState([]);
 
   const [userURL, updateUserURL] = useState({
-    title:"",
+    title: "",
     authToken,
     redirectURL: "",
     activeStatus: true,
   });
 
-  const getAllUrl = async () => {
-    fetch(`${apiURL}/url/url-shortener`, {
-      method: "GET",
-      headers: {
-        authorization: localStorage.getItem("authToken"),
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => updateUrls(res))
-      .catch((err) =>{ 
-        alert('Something went wrong')
-        // console.log("Error in dashboard page : - ", err)
-      });
-  };
-
+  //UseEffect
   useEffect(() => {
-    getAllUrl();
+    axios.get(`${LOCALHOST_API}/url/url-shortener`, {
+      headers: {
+        Authorization: authToken
+      }
+    })
+      .then((res) => updateUrls(res.data))
+      .catch(error => toast.error('Something went wrong'))
   }, []);
 
-  //handle the generate url
+
+  //Generate new url
   const handleGenerateURL = async () => {
-    try {
-      const response = await fetch(`${apiURL}/url/url-shortener`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: localStorage.getItem("authToken"),
-        },
-        body: JSON.stringify(userURL),
-      });
-      const { status } = response;
-      if (status === 201) {
-        alert("short url generated successfully");
-        getAllUrl();
-        updateUserURL({ ...userURL, redirectURL:"", title:"" });
-      } else if (status === 400) {
-        alert("Required field are missing");
-      } else {
-        alert("Something went wrong");
-      }
-    } catch (error) {
-      alert('Something went wrong')
-      // console.log("Error in dashboard while creating the short url : -", error);
-    }
+    axios.post(`${apiURL}/url/url-shortener`, userURL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authToken
+      },
+    })
+      .then((res) => {
+        updateUserURL({
+          title: "",
+          authToken,
+          redirectURL: "",
+          activeStatus: true,
+        })
+        return updateUrls([...urls, res.data.newURL])
+      })
+
   };
 
+
+  //url details page
   const navigateToViewDetailsPage = (urlId) => {
     navigate(`/dashboard/view-details`, { state: { urlId } });
   };
 
   //change active status
-  const changeTheStatusOfCreatedURL = async(_id, activeStatus) => {
-    try {
-        const data = {
-            activeStatus,
-          }
-      const response = await fetch(
-        `${LOCALHOST_API}/url/url-shortener/${_id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: authToken,
-          },
-          body: JSON.stringify(data),
-        }
-    );
-        const {status} = response;
-        if(status === 200) {
-          getAllUrl()
-          activeStatus ? alert('ShortURL is active') :  alert('ShortURL is Inactive');
-        }
-        else alert('Sonmething went wrong')
-    } catch (error) {
-      alert('Sonmething went wrong')
-        // console.log("error while changing the status of the url : - ",error)
+  const ChangeStatusOfURL=(isActive, _id , activeStatus, title)=>{
+    if(isActive){
+      updateUrls(urls.map(val=>{
+        if(val._id == _id) val.activeStatus = activeStatus;
+        return val;
+      }))
+      return toast.success(`${title} is ${activeStatus ? 'Actived' : 'Deactived'}`)
     }
-  };
+  }
 
   //deletion function
-  const deleteTheCreatedShortURL = async (id) => {
-    if(confirm('Are you sure ?')){
-      fetch(`${LOCALHOST_API}/url/url-shortener/${id}`,{
-        method : "DELETE",
-        headers : {
-          Authorization : authToken
-        }
-      })
-      .then(res => {
-        if(res.status === 200)return res.json();
-        return null;
-      })
-      .then(res => {
-        const {deletedURL} = res;
-        if(!deletedURL) return alert('Something went wrong!!!')
-          const {title,shortId,redirectURL} = deletedURL;
-        alert(`URL is deleted\nTitle : - ${title}\nshortID : - ${shortId}\nOriginal URL :- ${redirectURL}`)
-        getAllUrl();
-      })
-      .catch(err => {
-        alert('something went wrong!!!')
-        // console.log("Error while deleting the shortURL\n",err)
-      })
-      
+  const deleteTheCreatedShortURL = (isDelete, id, title)=>{
+    if(isDelete){
+      toast.success(`${title} Deleted Successfully`)
+      return updateUrls(urls.filter(val => val._id!=id));
     }
-  };
+  }
 
   //profile vist
   const vistToProfile = () => {
     navigate("/dashboard/user-profile");
   };
 
- 
+
   return (
     <div className="main_dashboard_conatiner">
       <div className="navbar">
@@ -139,10 +97,10 @@ const Dashboard = () => {
       <div className="generate_url_box">
         <label>Create short URL</label>
         <input
-         placeholder="Enter title"
-         value={userURL.title}
-         onChange={e=>updateUserURL({...userURL,title:e.target.value})}
-         ></input>
+          placeholder="Enter title"
+          value={userURL.title}
+          onChange={e => updateUserURL({ ...userURL, title: e.target.value })}
+        ></input>
         <input
           placeholder="Enter your url"
           value={userURL.redirectURL}
@@ -180,22 +138,10 @@ const Dashboard = () => {
                     </button>
                   </td>
                   <td>
-                    <button
-                      onClick={() =>
-                        changeTheStatusOfCreatedURL(val._id, !val.activeStatus)
-                      }
-                      style={
-                        (val.activeStatus && { backgroundColor: "green" }) ||
-                        (!val.activeStatus && { backgroundColor: "red" })
-                      }
-                    >
-                      {val.activeStatus ? "Active" : "Inactive"}
-                    </button>
+                   <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val}/>
                   </td>
                   <td>
-                    <button onClick={() => deleteTheCreatedShortURL(val._id)}>
-                      Delete
-                    </button>
+                    <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val}/>
                   </td>
                 </tr>
               );

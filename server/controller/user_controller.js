@@ -32,7 +32,7 @@ async function handleLoginRequest(req, res) {
     const authToken = setUser(findOneUser); // set jwt token
     return res
       .status(200)
-      .json({ success: true, msg: "Login Successfully", authToken });
+      .json({ success: true, msg: "Login Successfully", authToken, user:findOneUser });
   } catch (err) {
     return res.status(500).json({ error: "Internal server error", err });
   }
@@ -53,7 +53,8 @@ async function handleUserProfile(req, res) {
 
 async function handleProfileUpdate(req, res) {
   try {
-    const { _id, firstName, lastName, email } = req.body;
+    const {firstName, lastName, email } = req.body;
+    const {_id} = req.user;
     const findOne = await user.findById(_id);
     if (!findOne) return res.status(401).json({ error: "User not found" });
     if(!firstName.trim() || !email.trim()) return res.status(400).json({error : 'firstName and email are required'})
@@ -63,7 +64,10 @@ async function handleProfileUpdate(req, res) {
     email.trim() && (findOne.email = email);
 
     await findOne.save();
-    return res.status(200).json({msg:"Profile Updated Successfully"});
+
+    findOne.encryptPassword = findOne.salt = undefined;
+    console.log("Print kr  : ",findOne)
+    return res.status(200).json({msg:"Profile Updated Successfully", "user":findOne});
   } catch (error) {
     return res.status(500).json({ error });
   }

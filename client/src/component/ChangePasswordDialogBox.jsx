@@ -1,5 +1,8 @@
 import { useState } from "react";
-import '../style/changePasswordDialogBox.css'
+import '../style/changePasswordDialogBox.css';
+import '../style/CommonDialogBox.css';
+import { toast } from "react-toastify";
+
 const ChangePasswordDialogBox=()=>{
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const [isOpen,setIsOpen] = useState(false);
@@ -14,7 +17,7 @@ const ChangePasswordDialogBox=()=>{
     const handleSavePassword=()=>{
 
         if(pass.newPassword !== pass.confirmNewPassword){
-            return alert('New Password and Confirm New Password are not matched');
+            return toast.error('New Password and Confirm New Password are not matched');
         }
         const {password,newPassword} = pass;
         fetch(`${LOCALHOST_API}/user/user-profile/change-password`,{

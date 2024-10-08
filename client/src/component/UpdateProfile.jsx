@@ -1,48 +1,41 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const UpdateProfile = ({fName,lName,eMail}) => {
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const [isOpen, setIsOpen] = useState(false);
-    const [user, updateUser] = useState({
-        firstName:fName,
-        lastName:lName,
-        email:eMail
-    })
+    const [user, updateUser] = useState()
+
     useEffect(()=>{
         updateUser({
             firstName:fName,
             lastName:lName,
             email:eMail
         })
-    },[fName,lName,eMail])
-
+    },[])
     const handleSaveProfile = () => {
 
         if(!user.firstName.trim() || !user.email.trim()) {
 
             if(!user.email.trim()) updateUser({...user,email:""})
             if(!user.firstName.trim()) updateUser({...user,firstName:""})
-            return alert('required field are missing');
+            return toast.error('required field are missing');
         }
 
-        fetch(`${LOCALHOST_API}/user/user-profile/update-profile`,{
-            method:"PATCH",
+        axios.patch(`${LOCALHOST_API}/user/user-profile/update-profile`,user,{
             headers:{
                 "Content-Type":"application/json",
                 authorization : localStorage.getItem('authToken')
             },
-            body:JSON.stringify(user)
         })
-        .then(async(res)=>{
-            const {status} = res;
-            const {error,msg} = await res.json()
-            if(status != 200){
-                return alert(error);
-            }
+        .then((res)=>{
             setIsOpen(false)
-            return alert(msg)
+            updateUser(res.data.user)
+            console.log(res.data.user)
+            return toast.success(res.data.msg)
         })
-        .catch(err=>alert('Something Went Wrong'))
+        .catch(err=>toast.error('Something Went Wrong !!'))
 
     }
 

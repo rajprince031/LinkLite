@@ -1,38 +1,35 @@
 import { useEffect, useState } from "react";
-import { useLocation, Route, Routes, useNavigate } from "react-router-dom";
-import LogInPage from "../component/LogInPage";
-const IsAuthRoute = (props) => {
-  const { component: Component, path } = props;
+import { useNavigate, Outlet } from "react-router-dom";
+import Loader from "../component/loader";
+import axios from "axios";
+const IsAuthRoute = () => {
   const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
-
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
+  const [isLogin, setIsLogin] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
+  const navigate = useNavigate();
+  const authToken = localStorage.getItem('authToken');
   useEffect(() => {
-    const authURL = `${LOCALHOST_API}/url/url-shortener`;
-    const authToken = localStorage.getItem("authToken");
-    if (!authToken) {
-      setIsAuthenticated(false);
-      return;
-    }
-    fetch(authURL, {
-      method: "GET",
+    if (!authToken) return navigate('/login');
+    axios.get(`${LOCALHOST_API}/auth/user`, {
       headers: {
-        authorization: authToken,
-      },
+        Authorization: authToken
+      }
     })
       .then((res) => {
-        if (res.status === 200) setIsAuthenticated(true);
-        else setIsAuthenticated(false);
+        setUserDetails(res.data.user);
+        return setIsLogin(true)
       })
-      .catch((error) => setIsAuthenticated(false));
-  }, []);
+      .catch((err) => {
+        console.log('Error in IsAuthRoute : \n', err)
+        return navigate('/login');
+      })
+  }, [])
 
-  return isAuthenticated === null ? null :(
-    <Routes>
-      {isAuthenticated ? <Route path={path} Component={Component} /> : <Route path={path} Component={LogInPage} />}
-    </Routes>
+  return (
+    !isLogin ? <Loader /> : <Outlet />
   )
-  
+
+
 };
 
 export default IsAuthRoute;

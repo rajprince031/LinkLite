@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config()
 
 function setUser(user){
-   return jwt.sign({_id : user._id,email:user.email},process.env.uniqueKey)
+    const{_id, fullName :name, email, firstName, lastName} = user;
+   return jwt.sign({_id,name,email,firstName,lastName},process.env.uniqueKey)
 }
 
 function getUser(authToken){

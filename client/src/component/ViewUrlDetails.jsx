@@ -1,5 +1,6 @@
 import { useState } from "react";
-import '../style/ViewUrlDetails.css'
+import '../style/CommonDialogBox.css';
+import '../style/ViewUrlDetails.css';
 const ViewUrlDetails = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const {
