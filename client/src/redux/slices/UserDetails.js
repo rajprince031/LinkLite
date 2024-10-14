@@ -1,21 +1,21 @@
 import { createSlice} from '@reduxjs/toolkit';
 
 
- const updateUserDetailsSlice = createSlice({
+ const UserDetailsSlice = createSlice({
     name:'userProfile',
     initialState:{},
     reducers:{
-        updateUserDetails:(state, action)=>{
+        userDetails:(state, action)=>{
             console.log('Payload print : ',action.payload)
             return {...state,...action.payload}
         },
-        logout : (state) =>{
+        logout : () =>{
             return {}
         }
     }
 
 });
 
-export const {updateUserDetails ,logout} = updateUserDetailsSlice.actions
+export const {userDetails ,logout} = UserDetailsSlice.actions
 
-export default updateUserDetailsSlice.reducer;
+export default UserDetailsSlice.reducer;

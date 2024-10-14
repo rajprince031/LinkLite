@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { updateUserDetails } from "../redux/slices/updateUserDetails";
+import { userDetails } from "../redux/slices/UserDetails";
 import axios from "axios";
 const LogInPage = () => {
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
@@ -27,9 +27,8 @@ const LogInPage = () => {
                 },
             })
             .then((res)=>{
-                const {firstName, lastName, email, _id} = res.data.user;
                 localStorage.setItem("authToken", res.data.authToken);
-                dispatch(updateUserDetails({firstName, lastName, email, _id}))
+                dispatch(userDetails(res.data.user))
                 window.location.replace(
                     pathname === "/dashboard" || !search
                         ? "/dashboard"

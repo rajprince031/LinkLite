@@ -1,17 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { userDetails } from "../redux/slices/UserDetails";
 
-const UpdateProfile = ({fName,lName,eMail}) => {
+const UpdateProfile = () => {
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
+    const dispatch = useDispatch();
+    const {firstName, lastName, email} = useSelector(state=>state.userProfile)
     const [isOpen, setIsOpen] = useState(false);
-    const [user, updateUser] = useState()
+    let [user, updateUser] = useState({})
+
 
     useEffect(()=>{
         updateUser({
-            firstName:fName,
-            lastName:lName,
-            email:eMail
+            firstName,
+            lastName,
+            email
         })
     },[])
     const handleSaveProfile = () => {
@@ -20,7 +25,8 @@ const UpdateProfile = ({fName,lName,eMail}) => {
 
             if(!user.email.trim()) updateUser({...user,email:""})
             if(!user.firstName.trim()) updateUser({...user,firstName:""})
-            return toast.error('required field are missing');
+            toast.error('required field are missing');
+            return 
         }
 
         axios.patch(`${LOCALHOST_API}/user/user-profile/update-profile`,user,{
@@ -30,21 +36,25 @@ const UpdateProfile = ({fName,lName,eMail}) => {
             },
         })
         .then((res)=>{
+            dispatch(userDetails(res.data.user))
+            console.log("kjhadfkjhl ",res.data.user)
             setIsOpen(false)
-            updateUser(res.data.user)
-            console.log(res.data.user)
-            return toast.success(res.data.msg)
+            toast.success(res.data.msg)
+            return 
         })
-        .catch(err=>toast.error('Something Went Wrong !!'))
+        .catch(err=>{
+            console.log(err)
+            toast.error('Something Went Wrong !!')
+    })
 
     }
 
     const handleCloseDialogBox = () => {
         setIsOpen(false);
         updateUser({
-            firstName:fName,
-            lastName:lName,
-            email:eMail
+            firstName,
+            lastName,
+            email
         })
     }
 

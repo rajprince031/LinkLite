@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const Dashboard = () => {
 
-  const details = useSelector(state=>state);
+    const details = useSelector(state=>state.userProfile);
   console.log('Details time :- ', details)
   const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
   const apiURL = LOCALHOST_API;

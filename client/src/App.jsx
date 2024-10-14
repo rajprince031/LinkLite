@@ -8,6 +8,7 @@ import ViewDetails from './component/ViewDetails'
 import UserProfile from './component/UserProfile'
 import IsLoginRoute from './Authentication/IsLoginRoute'
 import PageNotFound from './component/PageNotFound'
+import UpdateProfile from './component/UpdateProfile'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path='/dashboard' Component={Dashboard} />
             <Route path='/dashboard/view-details' Component={ViewDetails} />
             <Route path='/dashboard/user-profile' Component={UserProfile} />
+            <Route path='/dashboard/update-profile' Component={UpdateProfile} />
           </Route>
         </Routes>
       </Router>

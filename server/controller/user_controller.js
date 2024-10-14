@@ -1,4 +1,4 @@
-const user = require("../models/user_model");
+const User = require("../models/user_model");
 const { v4: uuidV4 } = require("uuid");
 const { setUser, getUser } = require("../service/user_auth");
 
@@ -6,7 +6,7 @@ const { setUser, getUser } = require("../service/user_auth");
 
 async function handleSignUpRequest(req, res) {
   const data = req.body;
-  let newUser = new user(data);
+  let newUser = new User(data);
   newUser = await newUser.save();
   return res.status(201).json({
     status: true,
@@ -22,7 +22,7 @@ async function handleLoginRequest(req, res) {
     const { email, password } = req.body;
     if (!email || !password)
       return res.status(400).json({ error: "Required field are missing" });
-    const findOneUser = await user.findOne({ email });
+    const findOneUser = await User.findOne({ email });
     if (!findOneUser) return res.status(404).json({ error: "User not found" });
     const validateUser = findOneUser.authenticate(password);
     if (!validateUser)
@@ -44,7 +44,7 @@ async function handleUserProfile(req, res) {
   const authToken = req.headers.authorization;
   const validateUser = getUser(authToken);
   if (!validateUser) return res.status(401).json({ error: "User not found" });
-  const userProfile = await user.findById({ _id: validateUser._id });
+  const userProfile = await User.findById({ _id: validateUser._id });
   userProfile.encryptPassword = userProfile.salt = undefined;
   return res.status(200).json({ status: true, userProfile });
 }
@@ -55,7 +55,7 @@ async function handleProfileUpdate(req, res) {
   try {
     const {firstName, lastName, email } = req.body;
     const {_id} = req.user;
-    const findOne = await user.findById(_id);
+    const findOne = await User.findById(_id);
     if (!findOne) return res.status(401).json({ error: "User not found" });
     if(!firstName.trim() || !email.trim()) return res.status(400).json({error : 'firstName and email are required'})
 
@@ -76,8 +76,9 @@ async function handleProfileUpdate(req, res) {
 //Change Password
 
 async function handleChangePassword(req, res) {
-  const { password, newPassword, _id } = req.body;
-  const findOne = await user.findById(_id);
+  const { password, newPassword} = req.body;
+  const {_id} = req.user;
+  const findOne = await User.findById(_id);
   const validateUser = findOne.authenticate(password);
   if (!validateUser)
     return res.status(400).json({ error: "Old Password Incorrect" });
