@@ -3,6 +3,8 @@ import { useEffect, React, useState } from "react";
 import moment from "moment-timezone";
 import '../style/viewDetailsStyle.css'
 import ViewUrlDetails from "./ViewUrlDetails";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
@@ -28,21 +30,20 @@ const ViewDetails = () => {
 
   const [filterIp,updatefilterIP] = useState([])
   const getAllDeatils = () => {
-    fetch(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
-      method: "GET",
+    axios(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
       headers: {
         authorization: localStorage.getItem("authToken"),
       },
     })
-      .then((res) => res.json())
-      .then((res) => {
-        setDetails(res.urlDetails)
-        updatefilterIP(res.urlDetails.vistedHistory)
-        console.log(details.vistedHistory)
+      .then((res) =>{
+        const urlDetails = res.data.urlDetails
+        setDetails(urlDetails)
+        updatefilterIP(urlDetails.vistedHistory)
+        console.log("view details : ",details.vistedHistory)
       })
-      .catch((err) => {
-        alert('Something went wrong')
-        // console.log("error occur :- ", err)
+      .catch((error) => {
+        toast.error(error.response.data.error)
+        console.log("error occur :- ", err)
       });
   };
 

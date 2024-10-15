@@ -1,27 +1,19 @@
 import '../style/homeStyle.css'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useSelector } from 'react-redux'
 const HomePage = () => {
-    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API
     const navigate = useNavigate()
-    const [isLogin, updateIsLogin] = useState(null)
-    // useEffect(() => {
-    //     axios.get(`${LOCALHOST_API}/auth/user`, {
-    //         headers: {
-    //             authorization: localStorage.getItem('authToken')
-    //         }
-    //     })
-    //         .then(res => {
-    //             return updateIsLogin(true)
-    //         })
-    //         .catch(err => {
-    //             return updateIsLogin(false)
-    //         })
-    // }, [])
-    const action = () => {
-        // if (isLogin) navigate('./dashboard')
+    const {firstName} = useSelector(state=>state.userProfile)
+    console.log("I am home page : ",firstName) 
+    let text = ("Log in")
+    if(firstName) text = (firstName)
+    const logInBtn = () => {
         navigate('./login')
+        return
+    }
+    const signUpBtn = () => {
+        navigate('./signup')
+        return
     }
 
     return (
@@ -34,8 +26,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className='navbar_options'>
-                    <button className='login_btn'>Log in</button>
-                    <button className='signup_btn'>Sign up</button>
+                    <button className='login_btn' onClick={logInBtn}>{text}</button>
                 </div>
             </div>
             <div className='body_container'>
@@ -47,7 +38,7 @@ const HomePage = () => {
                             user details like IP addresses, device info, and access timestamps.
                         </p>
                     </div>
-                    <button onClick={action} className='join_btn'>
+                    <button onClick={signUpBtn} className='join_btn'>
                         Unlock short links!
                     </button>
                     <div className='tag_line_container'>

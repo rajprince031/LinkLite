@@ -6,7 +6,7 @@ async function isOwner_auth(req,res,next){
     const urlDetails = await URL.findById(_id)
     if(!urlDetails) return res.status(404).json({error : "User not found"})
     const {creator} = urlDetails
-    if(creator != userId) return res.status(401).json({error : "User not authorized"})
+    if(creator.toString() != userId.toString()) return res.status(401).json({error : "User not authorized"})
     req.urlDetails = urlDetails;
     next();
 }

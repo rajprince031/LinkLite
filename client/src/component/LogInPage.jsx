@@ -21,29 +21,21 @@ const LogInPage = () => {
     const handleLogInRequest = async () => {
         try {
 
-            axios.post(`${LOCALHOST_API}/user/login`,user,{
+            axios.post(`${LOCALHOST_API}/user/login`, user, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
-            .then((res)=>{
-                localStorage.setItem("authToken", res.data.authToken);
-                dispatch(userDetails(res.data.user))
-                window.location.replace(
-                    pathname === "/dashboard" || !search
-                        ? "/dashboard"
-                        : `${pathname}${search}`);
-                return toast.success(res.data.msg)
-            })
-            .catch(error=>toast.error(res.data.error))
-            const response = await fetch(`${LOCALHOST_API}/user/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(user),
-            });
-
+                .then((res) => {
+                    localStorage.setItem("authToken", res.data.authToken);
+                    dispatch(userDetails(res.data.user))
+                    window.location.replace(
+                        pathname === "/dashboard" || !search
+                            ? "/dashboard"
+                            : `${pathname}${search}`);
+                    return toast.success(res.data.msg)
+                })
+                .catch(error => toast.error(error.response.data.error))
         } catch (error) {
             console.log("Error during LogIn : - ", error);
             return toast.error('Something went wrong')
@@ -52,22 +44,62 @@ const LogInPage = () => {
 
     return (
         <div className="main_login_container">
-            <h1>Hello I am LogIn Page</h1>
-            <label>Email Address</label>
-            <input
-                placeholder="Email Address"
-                value={user.email}
-                onChange={(e) => updateUser({ ...user, email: e.target.value })}
-            ></input>
-            <label>Password</label>
-            <input
-                placeholder="Password"
-                value={user.password}
-                onChange={(e) => updateUser({ ...user, password: e.target.value })}
-            ></input>
-            <button onClick={handleLogInRequest}>Login</button>
-            <br />
-            <h4 onClick={moveToSignUpPage}>Create account</h4>
+            <div className="navbar_container">
+                <div className='title_name'>
+                    <p>LinkLite</p>
+                    <div className='bubble-left'>
+                        Experience it now!
+                    </div>
+                </div>
+            </div>
+            <div className="login_sigup_box">
+                <div className="full_left_box">
+                    <div className="login_box">
+                        <div className="heading">
+                            <p className="main_heading">Let’s Get You Back Onboard!</p>
+                            <p className="sub_heading">Please Log In.</p>
+                        </div>
+                        <div className="input_field">
+                            {/* <label className='label'>Email Address</label> */}
+                            <input className="input"
+                                placeholder="Username"
+                                value={user.email}
+                                onChange={(e) => updateUser({ ...user, email: e.target.value })}
+                            ></input>
+                            {/* <label className='label'>Password</label> */}
+                            <input className="input"
+                                placeholder="Password"
+                                value={user.password}
+                                type="password"
+                                onChange={(e) => updateUser({ ...user, password: e.target.value })}
+                            ></input>
+                        </div>
+
+                        <div className="login_btnn">
+
+                            <button onClick={handleLogInRequest}>Login</button>
+                        </div>
+                    </div>
+                    <div className="image_box1"></div>
+                </div>
+
+                <div className="signup_box">
+                    <div className="image_box2"></div>
+                    <button
+                        className="ui-btn"
+                        onClick={moveToSignUpPage}>
+                        <p>Be Part of Something Great - </p>
+                        <span>
+                            Unlock Access!
+                        </span>
+                    </button>
+
+                </div>
+            </div>
+            <div className='signature'>
+                <p>© 2024 LINKLITE. All rights reserved.</p>
+                <p>Created by <strong>Prince Raj</strong></p>
+            </div>
         </div>
     );
 };
