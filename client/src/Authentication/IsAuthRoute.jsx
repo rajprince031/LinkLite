@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-import Loader from "../component/loader";
+import Loader from "../component/Loader";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { userDetails } from "../redux/slices/UserDetails";
