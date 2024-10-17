@@ -1,6 +1,6 @@
 
 .main_home_container {
-  min-height: fit-content;
+  height: 95vh !important;
   min-width: fit-content;
   display: flex;
   flex-direction: column;
@@ -246,7 +246,7 @@
     /* background-color: red; */
     box-sizing: border-box;
     height:150px;
-    margin-top: -20px;
+    margin-top: -90px;
 }
 .title_key_features {
   display: flex;

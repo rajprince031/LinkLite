@@ -1,5 +1,5 @@
 .main_login_container {
-height:95vh;
+min-height:95vh;
   min-width: fit-content;
   display: flex;
   flex-direction: column;
