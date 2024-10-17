@@ -327,10 +327,10 @@
 }
 
 .simple_api_icon {
-  background-image: url("../assets/icons/time.png");
+  background-image: url("../assets/icons/simpleApi.png");
   background-size: cover;
-  height: 30px;
-  min-width: 30px;
+  height: 35px;
+  min-width: 35px;
 }
 
 .blank_space {

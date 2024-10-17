@@ -1,15 +1,19 @@
 .main_user_profile_container{
-    height: 100vh;
+    height: 90%;
     display : flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* background-color: black; */
+    justify-content: space-between;
     backdrop-filter: 20;
-    z-index: 1000;
+    margin-top: 50px;
+    width: 100%;
+
 }
 
 .buttons{
     display : flex;
+    flex-direction: column;
+    align-items: start;
     gap:10px
 }
 .buttons button:hover{
@@ -20,3 +24,158 @@
     display: flex;
     justify-content: center;
 }
+
+/* From Uiverse.io by Kagamiie */ 
+.project-info {
+    padding:40px 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .project-title {
+    font-weight: 500;
+    font-size: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: black;
+  }
+  
+  .lighter {
+    font-size: 0.9em;
+  }
+  
+  .tag {
+    font-weight: lighter;
+    color: grey;
+  }
+  
+  /*DELETE THIS TWO LINE*/
+  .delete {
+    background-color: #b2b2fd;
+  }
+  
+  .card-img div {
+    width: 90%;
+  }
+  /*IF USING IMAGES*/
+  
+  .card {
+    background-color: white;
+    color: black;
+    width: 90%;
+    max-height: 220px;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  }
+  
+  .card-img {
+    position: relative;
+    top: -20px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Change the .card-img div to .card-img img to use img*/
+  .card-img a,
+  .card-img div {
+    height: 150px;
+    width: 90%;
+    /* Change this width here to change the width of the color/image */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+  
+  .card-imgs {
+    transition: all 0.5s;
+  }
+  
+
+  /* logout btn  */
+
+  /* From Uiverse.io by MUJTABA201566 */ 
+.logout_button .Btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background-color: white;
+  }
+  
+  /* plus sign */
+  .logout_button .sign {
+    width: 100%;
+    transition-duration: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logout_button .sign svg {
+    width: 17px;
+  }
+  
+  .logout_button .sign svg path {
+    fill: black;
+  }
+  /* text */
+  .logout_button .text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition-duration: 0.3s;
+  }
+  /* hover effect on button width */
+  .logout_button .Btn:hover {
+    background-color: black;
+    width: 150px;
+    border-radius: 40px;
+    transition-duration: 0.3s;
+  }
+  
+  .logout_button .Btn:hover .sign {
+    width: 30%;
+    transition-duration: 0.3s;
+    padding-left: 20px;
+  }
+  
+  .logout_button .Btn:hover .sign svg path {
+    fill: white;
+  }
+  
+  /* hover effect button's text */
+  .logout_button .Btn:hover .text {
+    opacity: 1;
+    width: 70%;
+    transition-duration: 0.3s;
+  }
+  /* button click effect*/
+  .logout_button .Btn:active {
+    transform: translate(2px, 2px);
+  }
+  
+  .edit-button::before {
+    display: none;
+    content: "Edit Profile";
+    color: white;
+    transition-duration: 0.3s;
+    font-size: 2px;
+  }
+  
+  /* */

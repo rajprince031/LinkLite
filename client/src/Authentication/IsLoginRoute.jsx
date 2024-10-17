@@ -23,7 +23,7 @@ function IsLoginRoute(){
             }
         }).then((res)=>{
             dispatch(userDetails(res.data.user))
-            navigate('/dashboard')
+            navigate('/dashboard',{replace:true})
             return 
         }).catch(err => setIsLogin(false))
     },[])

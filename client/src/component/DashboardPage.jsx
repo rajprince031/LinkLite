@@ -1,22 +1,27 @@
 import axios from "axios";
 import "../style/dashboardStyle.css";
 import { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import DeleteCreatedURL from "./DeleteCreatedURL";
 import ChangeActiveStatusOfURL from "./ChangeActiveStatusOfURL";
 import { useSelector } from "react-redux";
+import UserProfile from "./UserProfile";
 
 
 const Dashboard = () => {
 
-    const details = useSelector(state=>state.userProfile);
+  const details = useSelector(state => state.userProfile);
   console.log('Details time :- ', details)
   const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
   const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
   const [urls, updateUrls] = useState([]);
+  const [total, setTotal] = useState({
+    totalClicks : 0,
+    totalURL : 0
+  });
 
   const [userURL, updateUserURL] = useState({
     title: "",
@@ -32,9 +37,15 @@ const Dashboard = () => {
         Authorization: authToken
       }
     })
-      .then((res) => updateUrls(res.data))
+      .then((res) => {
+        updateUrls(res.data)
+        let sum = 0;
+        urls.forEach(val=>{sum = sum+val.vistedHistory.length})
+        setTotal({...total,totalURL:urls.length,totalClicks:sum})
+        return
+      })
       .catch(error => toast.error('Something went wrong'))
-  }, []);
+  }, [total]);
 
 
   //Generate new url
@@ -52,7 +63,9 @@ const Dashboard = () => {
           redirectURL: "",
           activeStatus: true,
         })
-        return updateUrls([...urls, res.data.newURL])
+        updateUrls([...urls, res.data.newURL])
+        
+        return
       })
 
   };
@@ -64,10 +77,10 @@ const Dashboard = () => {
   };
 
   //change active status
-  const ChangeStatusOfURL=(isActive, _id , activeStatus, title)=>{
-    if(isActive){
-      updateUrls(urls.map(val=>{
-        if(val._id == _id) val.activeStatus = activeStatus;
+  const ChangeStatusOfURL = (isActive, _id, activeStatus, title) => {
+    if (isActive) {
+      updateUrls(urls.map(val => {
+        if (val._id == _id) val.activeStatus = activeStatus;
         return val;
       }))
       return toast.success(`${title} is ${activeStatus ? 'Actived' : 'Deactived'}`)
@@ -75,10 +88,10 @@ const Dashboard = () => {
   }
 
   //deletion function
-  const deleteTheCreatedShortURL = (isDelete, id, title)=>{
-    if(isDelete){
+  const deleteTheCreatedShortURL = (isDelete, id, title) => {
+    if (isDelete) {
       toast.success(`${title} Deleted Successfully`)
-      return updateUrls(urls.filter(val => val._id!=id));
+      return updateUrls(urls.filter(val => val._id != id));
     }
   }
 
@@ -87,70 +100,109 @@ const Dashboard = () => {
     navigate("/dashboard/user-profile");
   };
 
-
   return (
-    <div className="main_dashboard_conatiner">
-      <div className="navbar">
-        <h2 onClick={vistToProfile}>Profile</h2>
+    <div className="main_dashboard_container">
+      <div className="navbar_container">
+        <div className='title_name'>
+          <p>LinkLite</p>
+          <div className='bubble-left'>
+            Experience it now!
+          </div>
+        </div>
+        <div className='navbar_options'>
+          {/* <button className='login_btn' onClick={logInBtn}>{text}</button> */}
+        </div>
       </div>
-      <h1>Hello I am Dashboard</h1>
-      <div className="generate_url_box">
-        <label>Create short URL</label>
-        <input
-          placeholder="Enter title"
-          value={userURL.title}
-          onChange={e => updateUserURL({ ...userURL, title: e.target.value })}
-        ></input>
-        <input
-          placeholder="Enter your url"
-          value={userURL.redirectURL}
-          onChange={(e) =>
-            updateUserURL({ ...userURL, redirectURL: e.target.value })
-          }
-        ></input>
-        <button onClick={handleGenerateURL}>Generate URL</button>
+      <div className="dashboard_main_container">
+        <div className="dashboard_profile_container">
+          <UserProfile/>
+        </div>
+        <div className="dashboard_container">
+          <div className="dashboard_upper_container">
+            <div className="dashboard_generate_url">
+              <div className="dashboard_gen_input_field">
+                <div className="dashboard_gen_title">Generate your link</div>
+                <br></br>
+                <input
+                  className="input"
+                  placeholder="Enter title"
+                  value={userURL.title}
+                  onChange={e => updateUserURL({ ...userURL, title: e.target.value })}
+                ></input>
+                <input
+                  className="input"
+                  placeholder="Enter your url"
+                  value={userURL.redirectURL}
+                  onChange={(e) =>
+                    updateUserURL({ ...userURL, redirectURL: e.target.value })
+                  }
+                ></input>
+              </div>
+              <div className='dashboard_gen_button'>
+                <button onClick={handleGenerateURL}><span>Generate URL</span></button>
+              </div>
+            </div>
+            <div className="dashboard_pending">
+                  <p>Total Clicks : {total.totalClicks}</p>
+                  <p>Total Created URL : {total.totalURL}</p>
+            </div>
+          </div>
+          <div className="dashboard_lower_container">
+            {/* <div className="dashboard_url_analytics">
+
+            </div> */}
+            <div className="dashboard_show_urls">
+              <h2>Created url</h2>
+              <div className="dashboard_list_of_all_created_url">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Source URL</th>
+                      <th>Shortened URL</th>
+                      <th>Total Clicks</th>
+                      <th>View Info</th>
+                      <th>State</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {urls.map((val) => {
+                      return (
+                        <tr>
+                          <td>{val.title}</td>
+                          <td className="dashboard_redirectURL_container">{val.redirectURL}</td>
+                          <td>{val.shortId}</td>
+                          <td>{val.vistedHistory.length}</td>
+                          <td>
+                            <button onClick={() => navigateToViewDetailsPage(val._id)}>
+                              view
+                            </button>
+                          </td>
+                          <td>
+                            <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val} />
+                          </td>
+                          <td>
+                            <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val} />
+                          </td>
+                        </tr>
+                      );
+                    }).reverse()}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <h2>Created url</h2>
-      <div className="list_of_all_created_url">
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Original-URL</th>
-              <th>Short-URL</th>
-              <th>No. of clicks</th>
-              <th>View Details</th>
-              <th>Status</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {urls.map((val) => {
-              return (
-                <tr>
-                  <td>{val.title}</td>
-                  <td className="redirectURL_container">{val.redirectURL}</td>
-                  <td>{val.shortId}</td>
-                  <td>{val.vistedHistory.length}</td>
-                  <td>
-                    <button onClick={() => navigateToViewDetailsPage(val._id)}>
-                      view
-                    </button>
-                  </td>
-                  <td>
-                   <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val}/>
-                  </td>
-                  <td>
-                    <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val}/>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <div className='signature'>
+                <p>© 2024 LINKLITE. All rights reserved.</p>
+                <p>Created by <strong>Prince Raj</strong></p>
+            </div>
     </div>
-  );
+  )
+
 };
+
 
 export default Dashboard;
