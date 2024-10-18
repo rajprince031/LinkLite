@@ -20,7 +20,7 @@ const HomePage = () => {
         <div className='main_home_container'>
             <div className="navbar_container">
                 <div className='title_name'>
-                    <p>LinkLite</p>
+                    <p onClick={()=>navigate('/')}>LinkLite</p>
                     <div className='bubble-left'>
                         Experience it now!
                     </div>
@@ -54,7 +54,6 @@ const HomePage = () => {
             <div className='main_key_features_container'>
                 <div className="title_key_features">Key Features</div>
                 <div className='key_features_container'>
-                    <div className='features_row1'>
                         <div class="feature_container">
                             <div className='feature_name'>
                                 <div className='auth_icon'></div>
@@ -85,8 +84,6 @@ const HomePage = () => {
                         </div>
 
 
-                    </div>
-                    <div className='features_row2'>
                         <div class="feature_container">
                             <div className='feature_name'>
                                 <div className='storage_icon'></div>
@@ -114,7 +111,6 @@ const HomePage = () => {
                         <div class="blank_space" >
 
                         </div>
-                    </div>
 
 
                 </div>

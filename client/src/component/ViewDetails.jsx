@@ -72,7 +72,7 @@ const ViewDetails = () => {
     <div className="view_details_main_container">
       <div className="navbar_container">
         <div className='title_name'>
-          <p>LinkLite</p>
+          <p onClick={()=>navigate('/')}>LinkLite</p>
           <div className='bubble-left'>
             Experience it now!
           </div>
