@@ -25,9 +25,7 @@ const HomePage = () => {
                         Experience it now!
                     </div>
                 </div>
-                <div className='navbar_options'>
                     <button className='login_btn' onClick={logInBtn}>{text}</button>
-                </div>
             </div>
             <div className='body_container'>
                 <div className='description_container'>
