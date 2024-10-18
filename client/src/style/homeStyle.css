@@ -399,15 +399,3 @@
   }
 
 }
-
-@media only screen and (orientation: portrait) {
-  /* body {
-      background-color: lightblue;
-  } */
-}
-
-@media only screen and (orientation: landscape) {
-  /* body {
-      background-color: lightgreen;
-  } */
-}
