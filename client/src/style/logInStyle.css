@@ -1,5 +1,7 @@
+
 .main_login_container {
-  min-height: fit-content;
+  height:100%;
+  width: 100%;
   background-color: rgb(182, 172, 172);
   margin: 10px;
   padding: 15px;

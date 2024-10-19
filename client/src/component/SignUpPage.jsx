@@ -18,12 +18,12 @@ const SingUpPage = () => {
     const handleSignUpRequest = async () => {
 
         try {
-            axios.post(`${LOCALHOST_API}/user/signup`,user, {
+            axios.post(`${LOCALHOST_API}/user/signup`, user, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                
-            }).then(res=>{
+
+            }).then(res => {
                 toast.success("Registration successfully");
                 updateUser({
                     firstName: "",
@@ -33,8 +33,8 @@ const SingUpPage = () => {
                 })
                 navigate('/login')
                 return
-            }).catch(err=>{
-                console.log("printing err : ",err);
+            }).catch(err => {
+                console.log("printing err : ", err);
                 toast.error(err.response.data.error)
             })
         } catch (error) {
@@ -58,9 +58,16 @@ const SingUpPage = () => {
                 </div>
             </div>
             <div className="signup_inner_conatainer">
-                <div className="signup_image_box1">
-
+                <div className="image_and_login_btn">
+                    <div className="signup_image_box1">
+                    </div>
+                    <div className='signup_login_btn'>
+                        <button class="btn"
+                            onClick={moveToLogInPage}>Already with us? Log in
+                        </button>
+                    </div>
                 </div>
+
                 <div className="signup_container">
                     <div className='heading'>
                         <p className='main_heading'>Excited to have you here!</p>
@@ -99,16 +106,12 @@ const SingUpPage = () => {
                         ></input>
                         <div className='signup_btn'>
 
-                        <button  onClick={handleSignUpRequest}>SignUp</button>
+                            <button onClick={handleSignUpRequest}>SignUp</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='signup_login_btn'>
-                <button class="btn"
-                    onClick={moveToLogInPage}>Already with us? Log in
-                </button>
-            </div>
+
             <div className='signature'>
                 <p>© 2024 LINKLITE. All rights reserved.</p>
                 <p>Created by <strong>Prince Raj</strong></p>
