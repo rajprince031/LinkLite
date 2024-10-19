@@ -1,30 +1,24 @@
 .main_login_container {
-min-height:95vh;
-  min-width: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  min-height: fit-content;
   background-color: rgb(182, 172, 172);
   margin: 10px;
-  padding: 15px 30px 15px 30px;
+  padding: 15px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
 }
 .login_sigup_box {
+  background-color: red;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: yellow; */
-  max-height: 600px
+  margin:10px;
 }
 
 
 .full_left_box{
-    padding-top: 200px;
 display: flex;
 flex-direction: column;
-justify-content: flex-end;
 }
 
 .image_box1{
@@ -39,26 +33,22 @@ justify-content: flex-end;
 .login_box {
   display: flex;
   flex-direction: column;
-  margin: 50px;
   background: #f8f8ff;
   max-width: 400px;
-  min-width: 350px;
+  min-width: 300px;
   border-radius: 5px 15px 5px 15px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  padding: 30px;
+  padding: 20px;
 
 }
 
 .heading {
 
 }
-.main_heading {
-
-}
 .sub_heading {
   padding: 10px 10px 0px 10px;
-  font-size: 14px;
+  font-size: 17px;
   color: rgb(81, 80, 80);
   font-family: monospace;
   display: flex;
@@ -303,12 +293,38 @@ justify-content: flex-end;
 /* sign btn */
 
 .image_box2 {
-    min-height: 400px;
-  min-width: 600px;
-  background-image: url("../assets/illustrations/loginPage.png");
-  background-size: cover;
+  max-height: 400px;
+  max-width: 600px;
+  min-height: 300px;
+  min-width: 300px;
+  width: 500px;
+  background-size:contain;
   background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../assets/illustrations/loginPage.png");
+  
 }
 
 
 
+@media only screen and (max-width: 700px){
+  .login_sigup_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .image_box2{
+    display: none;
+  }
+  .signup_box p{
+    display: none;
+  }
+}
+/* 
+@media only screen and (max-width: 474px){
+  .bubble-left{
+    visibility: hidden;
+  }
+
+} */

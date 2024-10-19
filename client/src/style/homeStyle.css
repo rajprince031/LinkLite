@@ -131,10 +131,11 @@
 }
 
 .welcome_container {
-  margin-top: 30%;
+  background-color: red;
+  margin-top: 20%;
   background: #f8f8ff;
   max-width: 400px;
-  min-width: 300px;
+  min-width: 250px;
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px 15px 5px 15px;
@@ -391,11 +392,29 @@
     flex-direction: column;
     align-items: center;
   }
+  .welcome_container .description {
+    font-size: 12px;
+  }
+
+.main_heading {
+  font-size: 23px;
+}
+.main_home_container{
+  margin:0px;
+  min-width: 340px;
+  min-height: 640px;
+}
+.title_name p{
+  font-size: 24px;
+}
+.bubble-left{
+  font-size: 10px;
+}
 }
 
 @media only screen and (max-width: 474px){
   .bubble-left{
-    visibility: hidden;
+    /* visibility: hidden; */
   }
-
+  
 }
