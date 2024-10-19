@@ -160,6 +160,8 @@
     flex-direction: column-reverse;
     margin: 0px;
     margin-top: 20px;
+  justify-content: space-evenly;
+    gap:30px;
   }
   .signup_container {
     margin: 0px;
