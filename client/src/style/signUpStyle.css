@@ -134,6 +134,7 @@
   cursor: pointer;
   outline: none;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .signup_btn button:hover {
