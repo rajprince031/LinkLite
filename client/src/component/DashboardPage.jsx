@@ -159,46 +159,42 @@ const Dashboard = () => {
             <div className="dashboard_show_urls">
               <h2>Created url</h2>
               <div className="dashboard_list_of_all_created_url">
-                {total.totalURL === 0 ?
-                  <div className="msg_if_no_link">
-                    No link generated.
-                  </div>
-                  :
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Title</th>
-                        <th className='dashboard_redirectURL_container'>Source URL</th>
-                        <th className='short_url_class'>Shortened URL</th>
-                        <th className='total_clicks'>Total Clicks</th>
-                        {/* <th>View Info</th> */}
-                        <th className="view_more_class"></th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {urls.map((val) => {
-                        return (
-                          <tr>
-                            <td>{val.title}</td>
-                            <td className="dashboard_redirectURL_container">{val.redirectURL}</td>
-                            <td className='short_url_class'>{val.shortId}</td>
-                            <td>{val.vistedHistory.length}</td>
-                            <td className="view_more_class">
-                              <button onClick={() => navigateToViewDetailsPage(val._id)}>
-                                view
-                              </button>
-                            </td>
-                            <td className='status_and_delete_button'>
-                              <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val} />
-                              <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val} />
-                            </td>
-                          </tr>
-                        );
-                      }).reverse()}
-                    </tbody>
-                  </table>
-                }
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th className='dashboard_redirectURL_container'>Source URL</th>
+                      <th className='short_url_class'>Shortened URL</th>
+                      <th className='total_clicks'>Total Clicks</th>
+                      {/* <th>View Info</th> */}
+                      <th className="view_more_class"></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {urls.map((val) => {
+                      return (
+                        <tr>
+                          <td>{val.title}</td>
+                          <td className="dashboard_redirectURL_container">{val.redirectURL}</td>
+                          <td className='short_url_class'>{val.shortId}</td>
+                          <td>{val.vistedHistory.length}</td>
+                          <td className="view_more_class">
+                            <button onClick={() => navigateToViewDetailsPage(val._id)}>
+                              view
+                            </button>
+                          </td>
+                          <td className='status_and_delete_button'>
+                            <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val} />
+                            <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val} />
+                          </td>
+                        </tr>
+                      );
+                    }).reverse()}
+                  </tbody>
+                </table>
+
               </div>
             </div>
           </div>

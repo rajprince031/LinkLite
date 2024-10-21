@@ -41,7 +41,6 @@
 }
 
 .dashboard_lower_container {
-  background-color: green;
   min-height: 400px;
   display: flex;
   gap: 10px;
