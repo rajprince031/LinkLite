@@ -1,7 +1,10 @@
 
 .main_login_container {
-  height:100%;
+  height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: rgb(182, 172, 172);
   margin: 10px;
   padding: 15px;
@@ -78,6 +81,7 @@ flex-direction: column;
   min-width:90%;
   margin:0px 0px 20px 0px;
   font-size: 14px;
+  animation: none !important;
 }
 
 
@@ -89,6 +93,7 @@ flex-direction: column;
     display: flex;
     flex-direction: row-reverse;
     margin-right: 40px;
+    overflow: visible;
 }
 /* login btn */
 .login_btnn button {
@@ -154,7 +159,7 @@ flex-direction: column;
     padding: var(--btn-padding);
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     margin: 0px 20px 0px 30px;
     gap:10px;
     color: var(--default-btn-color);
@@ -167,6 +172,7 @@ flex-direction: column;
     overflow: hidden;
     box-shadow: var(--btn-shadow);
     width:90%;
+    text-wrap: nowrap;
 
   }
   
@@ -297,8 +303,8 @@ flex-direction: column;
 .image_box2 {
   max-height: 400px;
   max-width: 600px;
-  min-height: 300px;
-  min-width: 300px;
+  min-height: 400px;
+  min-width: 400px;
   width: 500px;
   background-size:contain;
   background-repeat: no-repeat;
@@ -316,11 +322,37 @@ flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .image_box2{
+  .image_box1{
     display: none;
   }
+  .image_box1{
+    background-position: center;
+    min-height: 300px;
+    min-width: 300px;
+  }
   .signup_box p{
-    display: none;
+    font-size: 10px;
+    font-weight: 400;
+    padding: 0px;
+    margin: 0px;
+    width: fit-content;
+  }
+  .signup_box span{
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+  }
+  .signup_box{
+   display: flex;
+   margin:0px;
+   overflow: visible;
+   background-size: contain;
+  }
+  .signup_box button{
+    max-width: 100%;
+    padding:10px;
+    margin-top:-20px;
+    margin-bottom: 20px;
   }
 }
 /* 

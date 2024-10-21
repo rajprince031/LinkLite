@@ -12,15 +12,15 @@ import UserProfile from "./UserProfile";
 const Dashboard = () => {
 
   const details = useSelector(state => state.userProfile);
-  console.log('Details time :- ', details)
+  // console.log('Details time :- ', details)
   const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
   const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
   const [urls, updateUrls] = useState([]);
   const [total, setTotal] = useState({
-    totalClicks : 0,
-    totalURL : 0
+    totalClicks: 0,
+    totalURL: 0
   });
 
   const [userURL, updateUserURL] = useState({
@@ -39,14 +39,17 @@ const Dashboard = () => {
     })
       .then((res) => {
         updateUrls(res.data)
-        let sum = 0;
-        urls.forEach(val=>{sum = sum+val.vistedHistory.length})
-        setTotal({...total,totalURL:urls.length,totalClicks:sum})
         return
       })
       .catch(error => toast.error('Something went wrong'))
-  }, [total]);
+  }, []);
 
+
+  useEffect(() => {
+    let sum = 0;
+    urls.forEach(val => { sum = sum + val.vistedHistory.length })
+    setTotal({ ...total, totalURL: urls.length, totalClicks: sum })
+  }, [urls])
 
   //Generate new url
   const handleGenerateURL = async () => {
@@ -64,7 +67,7 @@ const Dashboard = () => {
           activeStatus: true,
         })
         updateUrls([...urls, res.data.newURL])
-        
+
         return
       })
 
@@ -96,26 +99,28 @@ const Dashboard = () => {
   }
 
   //profile vist
-  const vistToProfile = () => {
+  const openProfileSection = () => {
     navigate("/dashboard/user-profile");
   };
+
+
 
   return (
     <div className="main_dashboard_container">
       <div className="navbar_container">
         <div className='title_name'>
-          <p onClick={()=>navigate('/')}>LinkLite</p>
+          <p onClick={() => navigate('/')}>LinkLite</p>
           <div className='bubble-left'>
             Experience it now!
           </div>
         </div>
         <div className='navbar_options'>
-          {/* <button className='login_btn' onClick={logInBtn}>{text}</button> */}
+          <button className='login_btn' onClick={openProfileSection}>{details.firstName}</button>
         </div>
       </div>
       <div className="dashboard_main_container">
         <div className="dashboard_profile_container">
-          <UserProfile/>
+          <UserProfile />
         </div>
         <div className="dashboard_container">
           <div className="dashboard_upper_container">
@@ -143,8 +148,8 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="dashboard_pending">
-                  <p>Total Clicks : {total.totalClicks}</p>
-                  <p>Total Created URL : {total.totalURL}</p>
+              <p>Total Clicks - {total.totalClicks}</p>
+              <p>Total Created URL - {total.totalURL}</p>
             </div>
           </div>
           <div className="dashboard_lower_container">
@@ -158,11 +163,11 @@ const Dashboard = () => {
                   <thead>
                     <tr>
                       <th>Title</th>
-                      <th>Source URL</th>
-                      <th>Shortened URL</th>
-                      <th>Total Clicks</th>
-                      <th>View Info</th>
-                      <th>State</th>
+                      <th className='dashboard_redirectURL_container'>Source URL</th>
+                      <th className='short_url_class'>Shortened URL</th>
+                      <th className='total_clicks'>Total Clicks</th>
+                      {/* <th>View Info</th> */}
+                      <th className="view_more_class"></th>
                       <th></th>
                     </tr>
                   </thead>
@@ -172,17 +177,15 @@ const Dashboard = () => {
                         <tr>
                           <td>{val.title}</td>
                           <td className="dashboard_redirectURL_container">{val.redirectURL}</td>
-                          <td>{val.shortId}</td>
+                          <td className='short_url_class'>{val.shortId}</td>
                           <td>{val.vistedHistory.length}</td>
-                          <td>
+                          <td className="view_more_class">
                             <button onClick={() => navigateToViewDetailsPage(val._id)}>
                               view
                             </button>
-                          </td>
-                          <td>
+                            </td>
+                           <td className='status_and_delete_button'>
                             <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val} />
-                          </td>
-                          <td>
                             <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val} />
                           </td>
                         </tr>
@@ -196,9 +199,9 @@ const Dashboard = () => {
         </div>
       </div>
       <div className='signature'>
-                <p>© 2024 LINKLITE. All rights reserved.</p>
-                <p>Created by <strong>Prince Raj</strong></p>
-            </div>
+        <p>© 2024 LINKLITE. All rights reserved.</p>
+        <p>Created by <strong>Prince Raj</strong></p>
+      </div>
     </div>
   )
 
