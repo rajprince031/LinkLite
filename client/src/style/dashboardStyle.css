@@ -191,9 +191,9 @@ h2 {
   margin-bottom: 15px;
 }
 table {
-  min-width: 100%;
+  width: 100%;
   border-collapse: collapse;
-  table-layout:auto;
+  table-layout:fixed;
   overflow: visible;
 }
 .tbl-header {
@@ -204,7 +204,7 @@ table {
   overflow-x: auto;
   margin-top: 0px;
   border: 1px solid rgb(240, 9, 9);
-  overflow: scroll;
+  overflow: auto;
 }
 th {
   padding: 20px 15px;
