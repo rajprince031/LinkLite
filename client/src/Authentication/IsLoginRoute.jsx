@@ -22,8 +22,9 @@ function IsLoginRoute(){
                 Authorization : authToken
             }
         }).then((res)=>{
-            dispatch(userDetails(res.data.user))
+                dispatch(userDetails(res.data.user))
             navigate('/dashboard',{replace:true})
+
             return 
         }).catch(err => setIsLogin(false))
     },[])
