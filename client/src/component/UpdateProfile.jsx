@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { userDetails } from "../redux/slices/UserDetails";
+import '../style/CommonDialogBox.css';
 import '../style/UpdateProfile.css'
 
 const UpdateProfile = () => {
@@ -71,21 +72,25 @@ const UpdateProfile = () => {
             {isOpen &&
                 <div className="dialog_box_overlay">
                     <div className="main_content_box">
-                        <label>First Name</label>
+                        <p className="title">Update Profile</p>
+                        <p>First Name</p>
                         <input
+                            className="input"
                             placeholder="First Name"
                             value={user.firstName}
                             onChange={e => updateUser({ ...user, firstName: e.target.value })}
                         ></input>
-                        <label>Last Name</label>
+                        <p>Last Name</p>
                         <input
+                        className="input"
                             placeholder="Last Name"
                             value={user.lastName}
                             onChange={e => updateUser({ ...user, lastName: e.target.value })}
                         ></input>
-                        <label>Email</label>
+                        <p>Username</p>
                         <input
-                            placeholder="Email"
+                        className="input"
+                            placeholder="Username"
                             value={user.email}
                             onChange={e => updateUser({ ...user, email: e.target.value })}
                         ></input>

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import '../style/changePasswordDialogBox.css';
 import '../style/CommonDialogBox.css';
+import '../style/changePasswordDialogBox.css';
 import { toast } from "react-toastify";
 
 const ChangePasswordDialogBox=()=>{
@@ -75,23 +75,26 @@ const ChangePasswordDialogBox=()=>{
                 isOpen &&
                 <div className='dialog_box_overlay'>
                     <div className="main_content_box">
-                        <p>Change Your Password</p>
-                        <label>Enter your current password</label>
+                        <p className="title">Change Your Password</p>
+                        <p>Enter your current password</p>
                         <input 
+                        className="input"
                         placeholder="Current Password"
                         value={pass.password}
                         onChange={e=>updatePassword({...pass,password:e.target.value})}
                         ></input>
 
-                        <label>Enter your new password</label>
+                        <p>Enter your new password</p>
                         <input 
+                        className="input"
                         placeholder="New Password"
                         value={pass.newPassword}
                         onChange={e=>updatePassword({...pass,newPassword:e.target.value})}
                         ></input>
 
-                        <label>Confirm your New Password</label>
+                        <p>Confirm your New Password</p>
                         <input 
+                        className="input"
                         placeholder="Confirm New Password"
                         value={pass.confirmNewPassword}
                         onChange={e=>updatePassword({...pass,confirmNewPassword:e.target.value})}

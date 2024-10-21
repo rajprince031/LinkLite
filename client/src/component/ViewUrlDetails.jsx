@@ -18,7 +18,7 @@ const ViewUrlDetails = (props) => {
     } = props.userDetails;
     return (
         <div className="main_dialog_box_conatiner">
-            <button onClick={() => setIsOpen(true)}>Info</button>
+            <button onClick={() => setIsOpen(true)} style={{fontSize:"10px"}}>Info</button>
 
             {
                 isOpen &&

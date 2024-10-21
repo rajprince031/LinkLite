@@ -1,30 +1,34 @@
 .main_user_profile_container{
-    height: 90%;
+    height: fit-content;
     display : flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    backdrop-filter: 20;
+    justify-content: flex-start;
     margin-top: 50px;
+    align-items: center;
+    backdrop-filter: 20;
     width: 100%;
     overflow: visible;
-
+  max-width: 500px;
+  gap:100px;
 }
-
+.all_buttons{
+  /* background-color: #b2b2fd; */
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 20px;
+}
 .buttons{
     display : flex;
     flex-direction: column;
-    align-items: start;
+    /* align-items: start; */
     gap:10px
 }
 .buttons button:hover{
     cursor: pointer;
 }
 
-.logout_button{
-    display: flex;
-    justify-content: center;
-}
+
 
 /* From Uiverse.io by Kagamiie */ 
 .project-info {
@@ -59,8 +63,7 @@
   
   .card-img div {
     width: 90%;
-    background-color: red;
-
+    height: 100%;
   }
   /*IF USING IMAGES*/
   
@@ -79,7 +82,7 @@
   .card-img {
     position: relative;
     top: -20px;
-    height: 100px;
+    height: 200px;
     display: flex;
     justify-content: center;
   }
@@ -189,12 +192,15 @@
     .main_user_profile_container{
       height: 100%;
   width: 100%;
+  max-width: 500px;
   display: flex;
+  gap:100px;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   background-color: rgb(182, 172, 172);
-  margin: 10px;
+  margin: 5px;
   padding: 15px;
+
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);

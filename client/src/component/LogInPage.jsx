@@ -5,11 +5,13 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userDetails } from "../redux/slices/UserDetails";
 import axios from "axios";
+import Spinner from "./Spinner";
 const LogInPage = () => {
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const navigate = useNavigate();
     const { pathname, search } = useLocation();
     const dispatch = useDispatch();
+    const [isSpinner, setIsSpinner] = useState(false);
     const [user, updateUser] = useState({
         email: "",
         password: "",
@@ -20,6 +22,7 @@ const LogInPage = () => {
 
     const handleLogInRequest = async () => {
         try {
+            setIsSpinner(true);
 
             axios.post(`${LOCALHOST_API}/user/login`, user, {
                 headers: {
@@ -29,14 +32,20 @@ const LogInPage = () => {
                 .then((res) => {
                     localStorage.setItem("authToken", res.data.authToken);
                     dispatch(userDetails(res.data.user))
+                    setIsSpinner(false)
                     window.location.replace(
                         pathname === "/dashboard" || !search
                             ? "/dashboard"
                             : `${pathname}${search}`);
                     return toast.success(res.data.msg)
                 })
-                .catch(error => toast.error(error.response.data.error))
+                .catch(error => {
+                    setIsSpinner(false)
+
+                    toast.error(error.response.data.error)
+                })
         } catch (error) {
+            setIsSpinner(false)
             console.log("Error during LogIn : - ", error);
             return toast.error('Something went wrong')
         }
@@ -74,10 +83,10 @@ const LogInPage = () => {
                                 onChange={(e) => updateUser({ ...user, password: e.target.value })}
                             ></input>
                         </div>
-
                         <div className="login_btnn">
+                        {isSpinner && <Spinner/>}
 
-                            <button onClick={handleLogInRequest}>Login</button>
+                        {!isSpinner && <button onClick={handleLogInRequest}>Login</button>}
                         </div>
                     </div>
                     <div className="image_box1"></div>

@@ -6,6 +6,7 @@ import ViewUrlDetails from "./ViewUrlDetails";
 import axios from "axios";
 import { toast } from "react-toastify";
 import UserProfile from "./UserProfile";
+import { useSelector } from "react-redux";
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
@@ -17,9 +18,9 @@ const ViewDetails = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const userDetails = useSelector(state => state.userProfile);
   const [urlId, setUrlId] = useState(location.state?.urlId);
   const [ipAddress, updateIpAddress] = useState();
-  const [showAllUser, setShowAllUser] = useState(false);
   if (!urlId) navigate("/view_details");
 
 
@@ -65,19 +66,23 @@ const ViewDetails = () => {
     getAllDeatils();
   }, []);
 
+const openProfileSection=()=>{
+  navigate("/dashboard/user-profile");
 
+}
 
 
   return (
     <div className="view_details_main_container">
       <div className="navbar_container">
         <div className='title_name'>
-          <p onClick={()=>navigate('/')}>LinkLite</p>
+          <p onClick={() => navigate('/')}>LinkLite</p>
           <div className='bubble-left'>
             Experience it now!
           </div>
         </div>
         <div className='navbar_options'>
+        <button className='login_btn' onClick={openProfileSection}>{userDetails.firstName}</button>
         </div>
       </div>
       <div className="view_details_inner_main_container">
@@ -102,7 +107,7 @@ const ViewDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="view_details_pending">
+            <div className="search_box_container">
               <div class="view_details_input-container">
                 <input
                   value={ipAddress}
@@ -112,15 +117,14 @@ const ViewDetails = () => {
                   name="text"
                   class="view_details_input"
                 />
-
               </div>
               <div className="view_details_search_btn">
-              <button className='fancy' onClick={filterUser}>
-                <span class="top-key"></span>
-                <span class="text">search</span>
-                <span class="bottom-key-1"></span>
-                <span class="bottom-key-2"></span>
-              </button>
+                <button className='fancy' onClick={filterUser}>
+                  <span class="top-key"></span>
+                  <span class="text">search</span>
+                  <span class="bottom-key-1"></span>
+                  <span class="bottom-key-2"></span>
+                </button>
               </div>
 
             </div>
@@ -132,12 +136,12 @@ const ViewDetails = () => {
                 <table>
                   <thead>
                     <tr>
-                      <th>IP Address</th>
+                      <th className="ipAddress">IP Address</th>
                       <th>Platfrom</th>
-                      <th>Browser</th>
-                      <th>Time</th>
+                      <th className="browser_name">Browser</th>
+                      <th className="time">Time</th>
                       <th>Date</th>
-                      <th>Full Details</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -152,11 +156,11 @@ const ViewDetails = () => {
                       const [Date, Time] = formatTime(dateTime).split(" - ")
                       return (
                         <tr>
-                          <td>{ip}</td>
+                          <td className="ipAddress">{ip}</td>
                           <td>{platform}</td>
-                          <td>{browser}</td>
+                          <td className="browser_name">{browser}</td>
                           <td>{Date}</td>
-                          <td>{Time}</td>
+                          <td className="time">{Time}</td>
                           <td><ViewUrlDetails userDetails={val} /></td>
                         </tr>
                       );

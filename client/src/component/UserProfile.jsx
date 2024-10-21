@@ -35,16 +35,13 @@ const UserProfile = () => {
                     >{user?.email}</span>
                 </div>
             </article>
-            <div>
+            <div className="all_buttons">
 
-                <div className='buttons'>
-                    <UpdateProfile />
-                    <ChangePasswordDialogBox />
-                </div>
+                <UpdateProfile />
+                <ChangePasswordDialogBox />
 
-                <br />
                 <div className="logout_button">
-                    <button onClick={handleLogoutRequest}class="Btn">
+                    <button onClick={handleLogoutRequest} class="Btn">
                         <div class="sign">
                             <svg viewBox="0 0 512 512">
                                 <path

@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Spinner from './Spinner';
 
 const SingUpPage = () => {
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
 
     const navigate = useNavigate();
+    const [isSpinner,setIsSpinner] = useState(false)
     const [user, updateUser] = useState({
         firstName: "",
         lastName: "",
@@ -16,7 +18,7 @@ const SingUpPage = () => {
     });
 
     const handleSignUpRequest = async () => {
-
+            setIsSpinner(true)
         try {
             axios.post(`${LOCALHOST_API}/user/signup`, user, {
                 headers: {
@@ -25,6 +27,7 @@ const SingUpPage = () => {
 
             }).then(res => {
                 toast.success("Registration successfully");
+                setIsSpinner(false)
                 updateUser({
                     firstName: "",
                     lastName: "",
@@ -34,10 +37,14 @@ const SingUpPage = () => {
                 navigate('/login')
                 return
             }).catch(err => {
+                setIsSpinner(false)
+
                 console.log("printing err : ", err);
                 toast.error(err.response.data.error)
             })
         } catch (error) {
+
+            setIsSpinner(false)
             console.log(error)
             toast.error('something went wrong')
             // console.log("Error occur during signup",error);
@@ -105,8 +112,8 @@ const SingUpPage = () => {
                             onChange={e => updateUser({ ...user, password: e.target.value })}
                         ></input>
                         <div className='signup_btn'>
-
-                            <button onClick={handleSignUpRequest}>SignUp</button>
+                            {isSpinner && <Spinner/>}
+                            {!isSpinner && <button onClick={handleSignUpRequest}>SignUp</button>}
                         </div>
                     </div>
                 </div>
