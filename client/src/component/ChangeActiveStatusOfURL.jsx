@@ -24,35 +24,31 @@ function ChangeActiveStatusOfURL({ changeStatus, value }) {
             return changeStatus(true, _id, res.data.activeStatus, title);
         }).catch(error => toast.error('Something went wrong!'))
     }
-    return (<div>
 
 
-        {/*  */}
-        <div class="checkbox-wrapper-35">
-            <input onClick={onChangeStatusBtn} value="private" name="switch" id="switch" type="checkbox" class="switch"/>
-                <label for="switch">
-                    <span class="switch-x-text"></span>
+    return (
+        <div>
+            <div className="checkbox-wrapper-35">
+                <input
+                    onClick={onChangeStatusBtn}
+                    value="private"
+                    name={`switch-${_id}`} // Make the name unique
+                    id={`switch-${_id}`} // Make the id unique
+                    type="checkbox"
+                    className="switch"
+                    checked={!isActive} // Control the checkbox state
+                    onChange={() => { }} // Prevent default checkbox behavior
+                />
+                <label htmlFor={`switch-${_id}`}>
+                    <span className="switch-x-text"></span>
                 </label>
-        </div>
-
-        {/*  */}
-
-
-        {/* <button onClick={() => setIsOpen(true)}>{isActive ? 'active' : 'inactive'}</button> */}
-        {/* {isOpen &&
-            <div className="dialog_box_overlay">
-                <div className="main_content_box">
-                    <p>You want to {!isActive ? 'active' : 'inactive'} this {title}</p>
-                    <button onClick={onChangeStatusBtn}>confirm</button>
-                    <button onClick={() => setIsOpen(false)}>close</button>
-                </div>
             </div>
-        } */}
+        </div>
+    );
 
 
-    </div>
 
-    )
+
 }
 
 

@@ -102,9 +102,9 @@
   text-align: center;
 }
 
-.title {
+.delete_title {
   color: #111827;
-  font-size: 1rem;
+  font-size: 25px ;
   font-weight: 600;
   line-height: 1.5rem;
 }
@@ -126,7 +126,7 @@
   padding: 0.5rem 1rem;
   background-color: #DC2626;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 0.8rem;
   line-height: 1.5rem;
   font-weight: 500;
   justify-content: center;
@@ -143,7 +143,7 @@
   padding: 0.5rem 1rem;
   background-color: #ffffff;
   color: #374151;
-  font-size: 1rem;
+  font-size: 0.8rem;
   line-height: 1.5rem;
   font-weight: 500;
   justify-content: center;
