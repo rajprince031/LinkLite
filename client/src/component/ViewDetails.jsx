@@ -99,7 +99,7 @@ const openProfileSection=()=>{
                   <br />
                   Short url -
                   <a href={`${LOCALHOST_API}/${details.shortId}`}>
-                    {details.shortId}
+                    {`${LOCALHOST_API}/${details.shortId}`}
                   </a>
                   <br />
                   Source URL - {" "}

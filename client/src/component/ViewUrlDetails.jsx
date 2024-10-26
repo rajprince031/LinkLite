@@ -22,8 +22,8 @@ const ViewUrlDetails = (props) => {
 
             {
                 isOpen &&
-                <div className='dialog_box_overlay'>
-                    <div className="main_content_box">
+                <div onClick={() => setIsOpen(false)} className='dialog_box_overlay'>
+                    <div onClick={(e) => e.stopPropagation()} className="main_content_box">
                         <p><span className="text">IP Address :</span> {ip}</p>
                         <p><span className="text">Browser :</span> {browser}</p>
                         <p><span className="text">Version :</span> {version}</p>

@@ -48,3 +48,6 @@ p{
     align-items: center;
     gap:10px;
 }
+.main_content_box{
+  overflow-y: auto;
+}
