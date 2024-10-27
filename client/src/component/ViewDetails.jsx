@@ -50,26 +50,33 @@ const ViewDetails = () => {
   };
 
 
-  const filterUser = () => {
-    updateIpAddress("")
-    if (!ipAddress || ipAddress.trim() === "") {
-      return alert('search box empty')
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      if (!ipAddress || ipAddress.trim() === "") {
+        getAllDeatils();
+        return
+      }
+      const arr = details.vistedHistory.filter((val) => val.ip.toString().startsWith(ipAddress.trim()))
+      if (arr.length === 0) {
+        updateIpAddress("")
+        return toast.error(`${ipAddress.trim()} not found`)
+      }
+      return updatefilterIP(arr);
     }
-    const arr = details.vistedHistory.filter((val) => val.ip == ipAddress.trim())
-    if (arr.length === 0) {
-      return alert(`${ipAddress.trim()} not found`)
-    }
-    return updatefilterIP(arr);
-  }
+      , 1000)
+
+      return ()=> clearTimeout(debounce)
+  }, [ipAddress])
 
   useEffect(() => {
     getAllDeatils();
-  }, []);
+  }
+    , []);
 
-const openProfileSection=()=>{
-  navigate("/dashboard/user-profile");
+  const openProfileSection = () => {
+    navigate("/dashboard/user-profile");
 
-}
+  }
 
 
   return (
@@ -82,7 +89,7 @@ const openProfileSection=()=>{
           </div>
         </div>
         <div className='navbar_options'>
-        <button className='login_btn' onClick={openProfileSection}>{userDetails.firstName}</button>
+          <button className='login_btn' onClick={openProfileSection}>{userDetails.firstName}</button>
         </div>
       </div>
       <div className="view_details_inner_main_container">
@@ -118,14 +125,14 @@ const openProfileSection=()=>{
                   class="view_details_input"
                 />
               </div>
-              <div className="view_details_search_btn">
+              {/* <div className="view_details_search_btn">
                 <button className='fancy' onClick={filterUser}>
                   <span class="top-key"></span>
                   <span class="text">search</span>
                   <span class="bottom-key-1"></span>
                   <span class="bottom-key-2"></span>
                 </button>
-              </div>
+              </div> */}
 
             </div>
           </div>
