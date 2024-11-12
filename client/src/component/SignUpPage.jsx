@@ -45,9 +45,9 @@ const SingUpPage = () => {
         } catch (error) {
 
             setIsSpinner(false)
-            console.log(error)
+            console.log("I am signup Page ",error)
             toast.error('something went wrong')
-            // console.log("Error occur during signup",error);
+            return;
         }
     }
     const moveToLogInPage = () => {
@@ -111,6 +111,7 @@ const SingUpPage = () => {
                             value={user.password}
                             onChange={e => updateUser({ ...user, password: e.target.value })}
                         ></input>
+                        <p className='password_description'>Password must be at least 8 characters long, contain both letters and numbers.</p>
                         <div className='signup_btn'>
                             {isSpinner && <Spinner/>}
                             {!isSpinner && <button onClick={handleSignUpRequest}>SignUp</button>}

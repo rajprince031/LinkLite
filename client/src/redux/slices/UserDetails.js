@@ -6,7 +6,6 @@ import { createSlice} from '@reduxjs/toolkit';
     initialState:{},
     reducers:{
         userDetails:(state, action)=>{
-            console.log('Payload print : ',action.payload)
             return {...state,...action.payload}
         },
         logout : () =>{

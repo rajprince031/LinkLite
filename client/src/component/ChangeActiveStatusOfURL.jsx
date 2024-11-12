@@ -20,7 +20,6 @@ function ChangeActiveStatusOfURL({ changeStatus, value }) {
         }).then((res) => {
             setIsOpen(false);
             setIsActive(res.data.activeStatus)
-            console.log(res.data.activeStatus)
             return changeStatus(true, _id, res.data.activeStatus, title);
         }).catch(error => toast.error('Something went wrong!'))
     }

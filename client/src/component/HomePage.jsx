@@ -1,12 +1,16 @@
 import '../style/homeStyle.css'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 const HomePage = () => {
     const navigate = useNavigate()
     const {firstName} = useSelector(state=>state.userProfile)
-    console.log("I am home page : ",firstName) 
-    let text = ("Log in")
-    if(firstName) text = (firstName)
+    const [text, setText] = useState("loading...");
+    console.log("I am home page ",text);
+    useEffect(()=>{
+        if(!firstName) setText("Log in");
+        else setText(firstName);
+    },[])
     const logInBtn = () => {
         navigate('./login')
         return
@@ -25,7 +29,7 @@ const HomePage = () => {
                         Experience it now!
                     </div>
                 </div>
-                    <button className='login_btn' onClick={logInBtn}>{text}</button>
+                    <button className='login_btn1' onClick={logInBtn}>{text}</button>
             </div>
             <div className='body_container'>
                 <div className='description_container'>

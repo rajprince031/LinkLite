@@ -11,7 +11,6 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
     const user = useSelector(state => state.userProfile)
-    console.log("Current user data ", user)
     const dispatch = useDispatch();
     const handleLogoutRequest = () => {
         localStorage.removeItem('authToken');

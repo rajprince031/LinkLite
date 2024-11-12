@@ -1,6 +1,8 @@
 .main_sigup_container {
   height: 100%;
   width: 100%;
+  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -200,4 +202,9 @@
     width: fit-content;
     box-sizing: border-box;
   }
+}
+
+.password_description{
+  font-size: 12px;
+  color:gray
 }

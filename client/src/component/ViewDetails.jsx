@@ -41,7 +41,6 @@ const ViewDetails = () => {
         const urlDetails = res.data.urlDetails
         setDetails(urlDetails)
         updatefilterIP(urlDetails.vistedHistory)
-        console.log("view details : ", details.vistedHistory)
       })
       .catch((error) => {
         toast.error(error.response.data.error)

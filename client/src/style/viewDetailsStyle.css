@@ -1,9 +1,10 @@
 .view_details_main_container {
   height: 100%;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   background-color: rgb(182, 172, 172);
   margin: 10px;
   padding: 15px;
@@ -175,6 +176,13 @@
 .signature {
   margin: 0;
   overflow: visible;
+  position:absolute;
+  background-color: red;
+  bottom: 0;
+  left:50%;
+  right: 50%;
+  text-wrap: nowrap;
+
 }
 
 h2 {
@@ -522,7 +530,7 @@ td {
 @media only Screen and (max-width: 780px) {
   .view_details_main_container {
     padding: 5px;
-    margin:0px
+    margin:0px;
   }
   .view_details_profile_container {
     display: none;

@@ -39,7 +39,6 @@ const UpdateProfile = () => {
         })
             .then((res) => {
                 dispatch(userDetails(res.data.user))
-                console.log("kjhadfkjhl ", res.data.user)
                 setIsOpen(false)
                 toast.success(res.data.msg)
                 return
