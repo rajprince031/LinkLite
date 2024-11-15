@@ -3,6 +3,8 @@
   overflow-x: hidden;
 }
 .main_home_container {
+  display: flex;
+  flex-direction: column;
   height:100%;
   min-height: 100vh;
   width: 100%;
@@ -74,7 +76,7 @@
 
 /*  */
 
-.login_btn1 {
+.login_btn {
   background-color: #000;
   border: 1px solid #000;
   border-radius: 4px;
@@ -95,20 +97,20 @@
 }
 /*  */
 
-.login_btn1:focus {
+.login_btn:focus {
   text-decoration: none;
 }
 
-.login_btn1:hover {
+.login_btn:hover {
   text-decoration: none;
 }
 
-.login_btn1:active {
+.login_btn:active {
   box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
   outline: 0;
 }
 
-.login_btn1:not([disabled]):active {
+.login_btn:not([disabled]):active {
   box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
   transform: translate(2px, 2px);
 }
@@ -391,7 +393,6 @@
   font-size: 10px;
   font-family: monospace;
   color: rgb(96, 92, 92);
-  z-index: 0;
 }
 
 @media only screen and (max-width: 700px) {

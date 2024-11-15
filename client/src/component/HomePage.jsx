@@ -29,7 +29,7 @@ const HomePage = () => {
                         Experience it now!
                     </div>
                 </div>
-                    <button className='login_btn1' onClick={logInBtn}>{text}</button>
+                    <button className='login_btn' onClick={logInBtn}>{text}</button>
             </div>
             <div className='body_container'>
                 <div className='description_container'>

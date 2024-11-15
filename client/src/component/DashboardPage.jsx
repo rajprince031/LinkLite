@@ -12,7 +12,6 @@ import UserProfile from "./UserProfile";
 const Dashboard = () => {
 
   const details = useSelector(state => state.userProfile);
-  // console.log('Details time :- ', details)
   const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
   const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
@@ -153,9 +152,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="dashboard_lower_container">
-            {/* <div className="dashboard_url_analytics">
-
-            </div> */}
+        
             <div className="dashboard_show_urls">
               <h2>Created url</h2>
               <div className="dashboard_list_of_all_created_url">
@@ -167,7 +164,6 @@ const Dashboard = () => {
                       <th className='dashboard_redirectURL_container'>Source URL</th>
                       <th className='short_url_class'>Shortened URL</th>
                       <th className='total_clicks'>Total Clicks</th>
-                      {/* <th>View Info</th> */}
                       <th className="view_more_class"></th>
                       <th></th>
                     </tr>
@@ -194,7 +190,6 @@ const Dashboard = () => {
                     }).reverse()}
                   </tbody>
                 </table>
-
               </div>
             </div>
           </div>
