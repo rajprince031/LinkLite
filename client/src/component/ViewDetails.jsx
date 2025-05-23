@@ -124,15 +124,6 @@ const ViewDetails = () => {
                   class="view_details_input"
                 />
               </div>
-              {/* <div className="view_details_search_btn">
-                <button className='fancy' onClick={filterUser}>
-                  <span class="top-key"></span>
-                  <span class="text">search</span>
-                  <span class="bottom-key-1"></span>
-                  <span class="bottom-key-2"></span>
-                </button>
-              </div> */}
-
             </div>
           </div>
           <div className="view_details_lower_container">
@@ -145,8 +136,8 @@ const ViewDetails = () => {
                       <th className="ipAddress">IP Address</th>
                       <th>Platfrom</th>
                       <th className="browser_name">Browser</th>
-                      <th className="time">Time</th>
-                      <th>Date</th>
+                      <th className="time">Date</th>
+                      <th>Time</th>
                       <th></th>
                     </tr>
                   </thead>

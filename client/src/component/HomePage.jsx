@@ -6,7 +6,9 @@ const HomePage = () => {
     const navigate = useNavigate()
     const {firstName} = useSelector(state=>state.userProfile)
     const [text, setText] = useState("loading...");
-    console.log("I am home page ",text);
+
+    // console.log("I am home page ",text);
+    
     useEffect(()=>{
         if(!firstName) setText("Log in");
         else setText(firstName);
@@ -29,7 +31,7 @@ const HomePage = () => {
                         Experience it now!
                     </div>
                 </div>
-                    <button className='login_btn' onClick={logInBtn}>{text}</button>
+                    <button className='login_btn_home_page' onClick={logInBtn}>{text}</button>
             </div>
             <div className='body_container'>
                 <div className='description_container'>
