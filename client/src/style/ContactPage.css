@@ -1,0 +1,33 @@
+.contact-container {
+  padding: 2rem;
+  /* max-width: 600px; */
+  margin: 0 auto;
+  background-color: antiquewhite;
+  height: fit-content;
+}
+
+.contact-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+
+}
+
+.contact-description {
+  text-align: center;
+  font-size: 1.125rem;
+  margin-bottom: 3rem;
+  color: #444;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.contact-details{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+

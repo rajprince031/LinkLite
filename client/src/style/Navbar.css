@@ -1,0 +1,204 @@
+/* Base Navbar Styles */
+.navbar {
+  background: sandybrown;
+  padding:  0px 10px 0px 10px ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Logo */
+.navbar__logo {
+  padding:10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.navbar__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.navbar__logo:has(p) {
+  color: black;
+  font-size: 25px;
+  font-family: "Cascadia Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+    monospace;
+}
+
+.navbar__logo .bubble-left {
+  --size: 50px;
+  position: relative;
+  width: var(--size);
+  height: calc(var(--size) * 0.66);
+  background: #333333a1;
+  border-radius: 2px;
+  padding: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 10px;
+  width: fit-content;
+  height: fit-content;
+  margin-top: 20px;
+  overflow: visible;
+}
+
+.navbar__logo .bubble-left:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: calc(var(--size) * 0.13) solid transparent;
+  border-right-color: #333333a1;
+  border-left: 0;
+  margin-top: calc(var(--size) * 0.13 * -1);
+  margin-left: calc(var(--size) * 0.13 * -1);
+  overflow: visible;
+
+}
+
+/* Hamburger Toggle */
+.navbar__toggle-label {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.navbar__toggle-label span {
+  width: 25px;
+  height: 2px;
+  background-color: #333;
+  transition: 0.3s;
+}
+
+#navbar-toggle {
+  display: none;
+}
+
+/* Menu */
+.navbar__menu {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Links */
+.navbar__link {
+  text-decoration: none;
+  bottom: 0;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  display: inline-block;
+  line-height: 1;
+}
+
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: #333;
+  transition: width 0.5s ease;
+}
+
+.navbar__link:hover::after {
+  width: 100%;
+}
+
+/* =======================
+   Responsive Mobile Menu
+========================== */
+
+@media (max-width: 768px) {
+  .navbar {
+    padding:  0px 10px 0px 10px ;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .navbar__toggle-label {
+    display: flex;
+  }
+
+  .navbar__menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    padding: 0;
+  }
+
+  #navbar-toggle:checked ~ .navbar__menu {
+    display: flex;
+    max-height: 500px;
+    padding: 1rem;
+  }
+}
+
+
+/* Login Button */
+
+.navbar__menu .login_btn {
+  background-color: #000;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: #fff 4px 4px 0 0, #000 4px 4px 0 1px;
+  color: #fff;
+  cursor: pointer;
+  font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue";
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px;
+  min-width: 100px;
+  height: fit-content;
+  text-align: center;
+  text-wrap: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar__menu .login_btn:focus {
+  text-decoration: none;
+}
+
+.navbar__menu .login_btn:hover {
+  text-decoration: none;
+  background-color: #000;   /* or any color you want on hover */
+  box-shadow: #fff 6px 6px 0 0, #000 6px 6px 0 1px;
+}
+
+.navbar__menu .login_btn:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.navbar__menu .login_btn:not([disabled]):active {
+  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+  transform: translate(2px, 2px);
+}

@@ -1,0 +1,15 @@
+.graph_section_container{
+    width: 200px;   /* match chart width */
+  height: 400px;  /* match chart height */
+  overflow: hidden;
+  position: relative;
+    
+  background: rgb(236, 236, 236);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.MuiChartsTooltip-root {
+  font-size: 6px !important;
+  width: 300px;
+  padding: 4px 4px !important;
+}

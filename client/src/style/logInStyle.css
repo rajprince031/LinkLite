@@ -1,365 +1,150 @@
-
+/* From Uiverse.io by zanina-yassine */
 .main_login_container {
-  height: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main_login_container .navbar__logo {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: rgb(182, 172, 172);
-  margin: 10px;
-  padding: 15px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-}
-.login_sigup_box {
-  /* background-color: red; */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin:10px;
+  justify-content: flex-start;
+  padding-left: 40px;
 }
 
-
-.full_left_box{
-display: flex;
-flex-direction: column;
-}
-
-.image_box1{
-    min-height:300px;
-    min-width: fit-content;
-    background-image: url("../assets/illustrations/loginPage2.png");
-    background-size:contain;
-    background-repeat: no-repeat;
-}
-/* login box */
-
-.login_box {
-  display: flex;
-  flex-direction: column;
-  background: #f8f8ff;
-  max-width: 400px;
-  min-width: 300px;
-  border-radius: 5px 15px 5px 15px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  padding: 20px;
-
-}
-
-.heading {
-
-}
-.sub_heading {
-  padding: 10px 10px 0px 10px;
-  font-size: 17px;
-  color: rgb(81, 80, 80);
-  font-family: monospace;
-  display: flex;
-  flex-direction: row-reverse;
-}
-.input_field {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.main_login_container .form_container {
   margin: 20px;
+  min-width: 200px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 40px 40px 40px 40px;
+  background-color: #ffffff;
+  box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
+    0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
+    0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 11px;
+  font-family: "Inter", sans-serif;
 }
 
-/* input box exp */
 
-/* From Uiverse.io by Galahhad */ 
-.input {
-  max-width: 190px;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: black;
-  box-shadow: 2px 2px 7px 0 rgb(0, 0, 0, 0.2);
+.main_login_container .title_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.main_login_container .title {
+  margin: 0;
+  padding: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #212121;
+}
+
+.main_login_container .subtitle {
+  font-size: 0.75em;
+  max-width: 80%;
+  text-align: center;
+  line-height: 1.1rem;
+  color: #8b8e98;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.main_login_container .input_container {
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.main_login_container .icon {
+  width: 20px;
+  position: absolute;
+  z-index: 99;
+  left: 12px;
+  bottom: 9px;
+}
+
+.main_login_container .input_label {
+  font-size: 0.75rem;
+  color: #8b8e98;
+  font-weight: 600;
+}
+
+.main_login_container .input_field {
+  width: auto;
+  height: 40px;
+  padding: 0 0 0 40px;
+  border-radius: 7px;
   outline: none;
-  color: white;
-  min-width:90%;
-  margin:0px 0px 20px 0px;
-  font-size: 14px;
-  animation: none !important;
+  border: 1px solid #e5e5e5;
+  filter: drop-shadow(0px 1px 0px #efefef)
+    drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+  transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
 
-
-
-/* input box exp */
-
-
-.login_btnn{
-    display: flex;
-    flex-direction: row-reverse;
-    margin-right: 40px;
-    overflow: visible;
-}
-/* login btn */
-.login_btnn button {
-    padding: 1.3em 3em;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    font-weight: 500;
-    color: #000;
-    background-color: #fff;
-    border: none;
-    border-radius: 45px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease 0s;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .login_btnn button:hover {
-    background-color: #23c483;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-    color: #fff;
-    transform: translateY(-7px);
-  }
-  
-  .login_btnn button:active {
-    transform: translateY(-1px);
-  }
-  /* login btnn */
-
-/* sigup box */
-
-
-.signup_box{
-    display: flex;
-    flex-direction: column;
-}
-/* sign btn */
-
-/* From Uiverse.io by Galahhad */ 
-.ui-btn {
-    --btn-default-bg: rgb(41, 41, 41);
-    --btn-padding: 15px 20px;
-    --btn-hover-bg: rgb(51, 51, 51);
-    --btn-transition: .3s;
-    --btn-letter-spacing: .1rem;
-    --btn-animation-duration: 1.2s;
-    --btn-shadow-color: rgba(0, 0, 0, 0.137);
-    --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
-    --hover-btn-color: #FAC921;
-    --default-btn-color: #fff;
-    --font-size: 16px;
-    /* 👆 this field should not be empty */
-    --font-weight: 600;
-    --font-family: Menlo,Roboto Mono,monospace;
-    /* 👆 this field should not be empty */
-  }
-  
-  /* button settings 👆 */
-  
-  .ui-btn {
-    box-sizing: border-box;
-    padding: var(--btn-padding);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0px 20px 0px 30px;
-    gap:10px;
-    color: var(--default-btn-color);
-    font: var(--font-weight) var(--font-size) var(--font-family);
-    background: var(--btn-default-bg);
-    border: 10px 10px 10px 10px;
-    border-radius: 10px 0px 10px 0px;
-    cursor: pointer;
-    transition: var(--btn-transition);
-    overflow: hidden;
-    box-shadow: var(--btn-shadow);
-    width:90%;
-    text-wrap: nowrap;
-
-  }
-  
-  .ui-btn span {
-    letter-spacing: var(--btn-letter-spacing);
-    transition: var(--btn-transition);
-    box-sizing: border-box;
-    position: relative;
-    background: inherit;
-  }
-  
-  .ui-btn span::before {
-    box-sizing: border-box;
-    position: absolute;
-    content: "";
-    background: inherit;
-  }
-  
-  .ui-btn:hover, .ui-btn:focus {
-    background: var(--btn-hover-bg);
-  }
-  
-  .ui-btn:hover span, .ui-btn:focus span {
-    color: var(--hover-btn-color);
-  }
-  
-  .ui-btn:hover span::before, .ui-btn:focus span::before {
-    animation: chitchat linear both var(--btn-animation-duration);
-  }
-  
-  @keyframes chitchat {
-    0% {
-      content: "#";
-    }
-  
-    5% {
-      content: ".";
-    }
-  
-    10% {
-      content: "^{";
-    }
-  
-    15% {
-      content: "-!";
-    }
-  
-    20% {
-      content: "#$_";
-    }
-  
-    25% {
-      content: "№:0";
-    }
-  
-    30% {
-      content: "#{+.";
-    }
-  
-    35% {
-      content: "@}-?";
-    }
-  
-    40% {
-      content: "?{4@%";
-    }
-  
-    45% {
-      content: "=.,^!";
-    }
-  
-    50% {
-      content: "?2@%";
-    }
-  
-    55% {
-      content: "\;1}]";
-    }
-  
-    60% {
-      content: "?{%:%";
-      right: 0;
-    }
-  
-    65% {
-      content: "|{f[4";
-      right: 0;
-    }
-  
-    70% {
-      content: "{4%0%";
-      right: 0;
-    }
-  
-    75% {
-      content: "'1_0<";
-      right: 0;
-    }
-  
-    80% {
-      content: "{0%";
-      right: 0;
-    }
-  
-    85% {
-      content: "]>'";
-      right: 0;
-    }
-  
-    90% {
-      content: "4";
-      right: 0;
-    }
-  
-    95% {
-      content: "2";
-      right: 0;
-    }
-  
-    100% {
-      content: "";
-      right: 0;
-    }
-  }
-
-/* sign btn */
-
-.image_box2 {
-  max-height: 400px;
-  max-width: 600px;
-  min-height: 400px;
-  min-width: 400px;
-  width: 500px;
-  background-size:contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: url("../assets/illustrations/loginPage.png");
-  
+.main_login_container .input_field:focus {
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 0px 2px #242424;
+  background-color: transparent;
 }
 
+.main_login_container .sign-in_btn {
+  width: 100%;
+  height: 40px;
+  border: 0;
+  background: #115dfc;
+  border-radius: 7px;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
+}
 
+.main_login_container .note {
+  font-size: 1rem;
+  max-width: 90%;
+  text-align: center;
+  line-height: 1.1rem;
+  color: #8b8e98;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  cursor: pointer;
+}
+.main_login_container .note strong {
+  color: #115dfc;
+  font-weight: 600;
+  text-wrap: nowrap;
+}
+.main_login_container .login_page_footer p{
+  margin: 0.2rem 0;
+  color: #555;
+  font-size: 0.8rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
-@media only screen and (max-width: 700px){
-  .login_sigup_box{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.main_login_container .login_page_footer{
+  width: 100%;
+  margin : 20px 20px 10px 40px;
+}
+
+@media (max-width: 773px) {
+  .main_login_container .note {
+    font-size: 0.9rem;
   }
-  .image_box1{
-    display: none;
-  }
-  .image_box1{
-    background-position: center;
-    min-height: 300px;
-    min-width: 300px;
-  }
-  .signup_box p{
-    font-size: 10px;
-    font-weight: 400;
-    padding: 0px;
-    margin: 0px;
-    width: fit-content;
-  }
-  .signup_box span{
-    font-size: 12px;
-    padding: 0px;
-    margin: 0px;
-  }
-  .signup_box{
-   display: flex;
-   margin:0px;
-   overflow: visible;
-   background-size: contain;
-  }
-  .signup_box button{
-    max-width: 100%;
-    padding:10px;
-    margin-top:-20px;
-    margin-bottom: 20px;
+
+  .main_login_container .title {
+    font-size: 20px;
   }
 }
-/* 
-@media only screen and (max-width: 474px){
-  .bubble-left{
-    visibility: hidden;
-  }
-
-} */
