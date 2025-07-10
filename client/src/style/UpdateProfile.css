@@ -1,90 +1,109 @@
-
-
-.main_content_box{
-    display:flex;
-    min-width: 300px;
-    flex-direction:column;
-    background-color: rgb(226, 218, 218);
-    border-radius: 10px;
-
+/* Trigger Button */
+.update_profile_edit_button {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 10px 0;
 }
 
-.main_content_box p{
-  color:black;
-    font-size: 13px;
-    overflow: visible;
+/* Overlay background */
+.update_profile_dialog_box_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 
-.button_container{
-    display: flex;
-    height:50px;
-    justify-content:center;
-    align-items: center;
-    gap:10px;
-    overflow: visible;
+/* Main dialog box */
+.update_profile_main_content_box {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 30px;
+  gap: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Title */
+.update_profile_title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #212121;
+  text-align: center;
+  font-family: Ayuthaya;
+}
 
-/*  */
-.edit-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgb(20, 20, 20);
-    border: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
-    cursor: pointer;
-    transition-duration: 0.3s;
-    overflow: hidden;
-    position: relative;
-    text-decoration: none !important;
-  }
-  
-  .edit-svgIcon {
-    width: 17px;
-    transition-duration: 0.3s;
-  }
-  
-  .edit-svgIcon path {
-    fill: white;
-  }
-  
-  .edit-button:hover {
-    width: 120px;
-    border-radius: 50px;
-    transition-duration: 0.3s;
-    background-color: rgb(255, 69, 69);
-    align-items: center;
-  }
-  
-  .edit-button:hover .edit-svgIcon {
-    width: 20px;
-    transition-duration: 0.3s;
-    transform: translateY(60%);
-    -webkit-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-  
-  .edit-button::before {
-    display: none;
-    content: "Edit Profile";
-    color: white;
-    transition-duration: 0.3s;
-    font-size: 2px;
-  }
-  
-  .edit-button:hover::before {
-    display: block;
-    padding-right: 10px;
-    font-size: 13px;
-    opacity: 1;
-    transform: translateY(0px);
-    transition-duration: 0.3s;
-  }
+/* Input container for each field */
+.input_container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Input label */
+.input_label {
+  font-size: 0.75rem;
+  color: #555;
+  font-weight: 600;
+  text-align: left;
+  font-family: Ayuthaya;
+}
+
+/* Input field style */
+.input_field {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 7px;
+  outline: none;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.input_field:focus {
+  border-color: #115DFC;
+  box-shadow: 0 0 0 2px rgba(17, 93, 252, 0.2);
+}
+
+/* Button container */
+.update_profile_button_container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Buttons */
+.update_profile_button_container button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Save Button */
+.update_profile_button_container button:first-child {
+  background-color: #115DFC;
+  color: white;
+}
+
+/* Cancel Button */
+.update_profile_button_container button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.update_profile_button_container button:hover {
+  opacity: 0.9;
+}

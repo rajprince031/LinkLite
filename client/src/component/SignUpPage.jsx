@@ -148,7 +148,7 @@ const SingUpPage = () => {
                 </div>
                 <button onClick={handleSignUpRequest} className="sign-in_btn">
                     {isSpinner && <span><Spinner /></span>}
-                    {!isSpinner && <span>Sign In</span>}
+                    {!isSpinner && <span>Sign Up</span>}
                 </button>
 
                 <p className="note" onClick={moveToLogInPage}>Already have an account? <strong>Sign in</strong></p>

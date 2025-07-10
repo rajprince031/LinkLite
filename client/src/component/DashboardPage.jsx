@@ -48,7 +48,7 @@ const Dashboard = () => {
   }, [urls]);
 
   //Update Url List after creating new url
-  const addingNewUrl = (newUrl) =>{
+  const addingNewUrl = (newUrl) => {
     updateUrls([...urls, newUrl])
   }
 
@@ -80,9 +80,12 @@ const Dashboard = () => {
 
   return (
     <div className="main_dashboard_container">
-      <div className="navbar__logo" onClick={() => { navigate("/"); }}>
-        <p>LinkLite</p>
-        <div className="bubble-left">Experience it now!</div>
+      <div className="dashboard_navbar">
+        <div className="navbar__logo" >
+          <p onClick={() => navigate("/")}>LinkLite</p>
+          <div className="bubble-left">Experience it now!</div>
+        </div>
+        <UserProfile />
       </div>
 
 
@@ -90,39 +93,39 @@ const Dashboard = () => {
         <h2 className="table-title">
           Generated Links
         </h2>
-        <GenerateLink updateNewUrl={addingNewUrl}/>
+        <GenerateLink updateNewUrl={addingNewUrl} />
       </div>
-        <div className="table-wrapper">
-          {urls.length != 0 && <table className="responsive-table">
-            <thead>
-              <tr>
-                <th className="url_title_column">Title</th>
-                <th className="dashboard_redirectURL_container">Redirect URL</th>
-                <th className="short_url_class"><p>Short URL</p></th>
-                <th className="visited_column">Hits</th>
-                <th className="actions_button"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {urls.map((val, index) => (
-                <tr key={index}>
-                  <td data-label="Title" className="url_title_column">{val.title}</td>
-                  <td data-label="Redirect URL" className="dashboard_redirectURL_container">{val.redirectURL}</td>
-                  <td data-label="Short URL" className="short_url_class">{val.shortId}</td>
-                  <td data-label="Visited" className="visited_column">{val.vistedHistory.length}</td>
+      <div className="table-wrapper">
+        {urls.length != 0 && <table className="responsive-table">
+          <thead>
+            <tr>
+              <th className="url_title_column">Title</th>
+              <th className="dashboard_redirectURL_container">Redirect URL</th>
+              <th className="short_url_class"><p>Short URL</p></th>
+              <th className="visited_column">Hits</th>
+              <th className="actions_button"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {urls.map((val, index) => (
+              <tr key={index}>
+                <td data-label="Title" className="url_title_column">{val.title}</td>
+                <td data-label="Redirect URL" className="dashboard_redirectURL_container">{val.redirectURL}</td>
+                <td data-label="Short URL" className="short_url_class">{val.shortId}</td>
+                <td data-label="Visited" className="visited_column">{val.vistedHistory.length}</td>
 
-                  <td data-label="Actions" className="actions_button">
-                    <div className="actions_conatiner">
-                      <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val} />
-                      <button className="info_button" onClick={() => navigateToViewDetailsPage(val._id)}>info</button>
-                      <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val} />
-                    </div>
-                  </td>
-                </tr>
-              )).reverse()}
-            </tbody>
-          </table>}
-          {urls.length == 0 && <p>NO URL CREATED</p>}
+                <td data-label="Actions" className="actions_button">
+                  <div className="actions_conatiner">
+                    <ChangeActiveStatusOfURL changeStatus={ChangeStatusOfURL} value={val} />
+                    <button className="info_button" onClick={() => navigateToViewDetailsPage(val._id)}>info</button>
+                    <DeleteCreatedURL deleteShortUrl={deleteTheCreatedShortURL} value={val} />
+                  </div>
+                </td>
+              </tr>
+            )).reverse()}
+          </tbody>
+        </table>}
+        {urls.length == 0 && <p className="no_activity_message">NO URL CREATED</p>}
       </div>
 
       <div className="dashboard_page_footer">

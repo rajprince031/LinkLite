@@ -6,22 +6,21 @@
   background-color: antiquewhite;
 }
 
+.dashboard_navbar{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .main_dashboard_container .table-title-container{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #000;
   font-family: Arial, Helvetica, sans-serif;
   width: 98%;
   border-radius: 8px 8px 8px 0px;
   margin-top: 20px;
-}
-
-.main_dashboard_container .navbar__logo {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  padding-left: 40px;
+  background-color: #000;
 }
 
 /* Footer */
@@ -55,12 +54,13 @@
 
 /* Table */
 .main_dashboard_container .table-wrapper {
-  background-color: #000;
   font-family: Arial, Helvetica, sans-serif;
   width: 98%;
   border-radius: 8px;
   border-radius: 0px 8px 8px 8px;
   overflow-y: auto;
+  background-color: antiquewhite;
+  color: #000;
 }
 
 .main_dashboard_container .responsive-table {
@@ -140,7 +140,7 @@
 
 }
 .main_dashboard_container .dashboard_redirectURL_container{
-  width: 200px;
+  max-width: 200px;
 }
 
 .main_dashboard_container td {
@@ -152,9 +152,10 @@ font-weight: 300;
 font-size: 15px;
 color: #000;
 border-bottom: solid 1px rgba(255, 255, 255, 0.1);
-/* overflow-x: hidden; */
+overflow-x: hidden;
 text-wrap: nowrap;
 text-overflow: ellipsis;
+
 }
 
 .main_dashboard_container .table-title{
@@ -164,4 +165,8 @@ text-overflow: ellipsis;
   margin-left: 20px;
   font-weight: 600;
   color: #fff;
+}
+
+.no_activity_message{
+  text-align: center;
 }

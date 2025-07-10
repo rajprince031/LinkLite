@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../style/navBar.css";
+import "../style/NavBar.css";
 import { Link } from "react-scroll";
 import { useEffect, useRef } from "react";
 const Navbar = ({ name }) => {
