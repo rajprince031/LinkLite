@@ -141,6 +141,7 @@
 }
 .main_dashboard_container .dashboard_redirectURL_container{
   max-width: 200px;
+  width: 200px;
 }
 
 .main_dashboard_container td {
