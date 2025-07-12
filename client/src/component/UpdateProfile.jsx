@@ -4,104 +4,109 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { userDetails } from "../redux/slices/UserDetails";
 import '../style/CommonDialogBox.css';
-import '../style/UpdateProfile.css'
+import '../style/UpdateProfile.css';
+import Spinner from "./Spinner";
 
 const UpdateProfile = () => {
-    const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
-    const dispatch = useDispatch();
-    const { firstName, lastName, email } = useSelector(state => state.userProfile)
-    const [isOpen, setIsOpen] = useState(false);
-    let [user, updateUser] = useState({})
+  const LOCALHOST_API = import.meta.env.VITE_LOCALHOST_API;
+  const dispatch = useDispatch();
+  const { firstName, lastName, email } = useSelector(state => state.userProfile);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [user, updateUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        updateUser({
-            firstName,
-            lastName,
-            email
-        })
-    }, [])
-    const handleSaveProfile = () => {
+  useEffect(() => {
+    updateUser({ firstName, lastName, email });
+  }, [firstName, lastName, email]);
 
-        if (!user.firstName.trim() || !user.email.trim()) {
-
-            if (!user.email.trim()) updateUser({ ...user, email: "" })
-            if (!user.firstName.trim()) updateUser({ ...user, firstName: "" })
-            toast.error('required field are missing');
-            return
-        }
-
-        axios.patch(`${LOCALHOST_API}/user/user-profile/update-profile`, user, {
-            headers: {
-                "Content-Type": "application/json",
-                authorization: localStorage.getItem('authToken')
-            },
-        })
-            .then((res) => {
-                dispatch(userDetails(res.data.user))
-                setIsOpen(false)
-                toast.success(res.data.msg)
-                return
-            })
-            .catch(err => {
-                console.log(err)
-                toast.error('Something Went Wrong !!')
-            })
-
+  const handleSaveProfile = () => {
+    setIsLoading(true);
+    if (!user.firstName.trim() || !user.email.trim()) {
+      if (!user.email.trim()) updateUser({ ...user, email: "" });
+      if (!user.firstName.trim()) updateUser({ ...user, firstName: "" });
+      toast.error('Required fields are missing');
+      setIsLoading(false);
+      return;
     }
 
-    const handleCloseDialogBox = () => {
+    axios.patch(`${LOCALHOST_API}/user/user-profile/update-profile`, user, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem('authToken')
+      },
+    })
+      .then(res => {
+        setIsLoading(false);
+        dispatch(userDetails(res.data.user));
         setIsOpen(false);
-        updateUser({
-            firstName,
-            lastName,
-            email
-        })
-    }
+        toast.success(res.data.msg);
+      })
+      .catch(err => {
+        setIsLoading(false);
+        console.error(err);
+        toast.error('Something went wrong!');
+      });
+  };
 
-    return (
-        <div>
+  const handleCloseDialogBox = () => {
+    setIsOpen(false);
+    updateUser({ firstName, lastName, email });
+  };
 
-            <button onClick={() => setIsOpen(true)} className="edit-button">
-                <svg className="edit-svgIcon" viewBox="0 0 512 512">
-                    <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
-                </svg>
-            </button>
+  return (
+    <div className="update_profile">
+      <p onClick={() => setIsOpen(true)} className="update_profile_edit_button">
+        Update Profile
+      </p>
 
-            {isOpen &&
-                <div className="dialog_box_overlay">
-                    <div className="main_content_box">
-                        <p className="title">Update Profile</p>
-                        <p>First Name</p>
-                        <input
-                            className="input"
-                            placeholder="First Name"
-                            value={user.firstName}
-                            onChange={e => updateUser({ ...user, firstName: e.target.value })}
-                        ></input>
-                        <p>Last Name</p>
-                        <input
-                        className="input"
-                            placeholder="Last Name"
-                            value={user.lastName}
-                            onChange={e => updateUser({ ...user, lastName: e.target.value })}
-                        ></input>
-                        <p>Username</p>
-                        <input
-                        className="input"
-                            placeholder="Username"
-                            value={user.email}
-                            onChange={e => updateUser({ ...user, email: e.target.value })}
-                        ></input>
-                        <div className="button_container">
-                            <button onClick={handleSaveProfile}>Save Profile</button>
-                            <button onClick={handleCloseDialogBox}>Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            }
+      {isOpen && (
+        <div className="update_profile_dialog_box_overlay" onClick={handleCloseDialogBox}>
+          <div className="update_profile_main_content_box" onClick={e => e.stopPropagation()}>
+            <p className="update_profile_title">Update Profile</p>
+
+            <div className="input_container">
+              <label className="input_label" htmlFor="first_name_input">First Name</label>
+              <input
+                id="first_name_input"
+                className="input input_field"
+                placeholder="First Name"
+                value={user.firstName}
+                onChange={e => updateUser({ ...user, firstName: e.target.value })}
+              />
+            </div>
+
+            <div className="input_container">
+              <label className="input_label" htmlFor="last_name_input">Last Name</label>
+              <input
+                id="last_name_input"
+                className="input input_field"
+                placeholder="Last Name"
+                value={user.lastName}
+                onChange={e => updateUser({ ...user, lastName: e.target.value })}
+              />
+            </div>
+
+            <div className="input_container">
+              <label className="input_label" htmlFor="email_input">Username</label>
+              <input
+                id="email_input"
+                className="input input_field"
+                placeholder="Username"
+                value={user.email}
+                onChange={e => updateUser({ ...user, email: e.target.value })}
+              />
+            </div>
+            {isLoading && <Spinner/>}
+            {!isLoading && <div className="update_profile_button_container">
+              <button onClick={handleSaveProfile}>Save Profile</button>
+              <button onClick={handleCloseDialogBox}>Cancel</button>
+            </div>}
+          </div>
         </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 
 export default UpdateProfile;

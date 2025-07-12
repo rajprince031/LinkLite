@@ -10,6 +10,8 @@ import IsLoginRoute from './Authentication/IsLoginRoute'
 import PageNotFound from './component/PageNotFound'
 import UpdateProfile from './component/UpdateProfile'
 import HomePageAuth from './Authentication/HomePageAuth'
+import AboutPage from './component/AboutPage'
+import ContactPage from './component/ContactPage'
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Routes>
           <Route Component={HomePageAuth}>
             <Route path='/' Component={HomePage} />
+            <Route path='/about' Component={AboutPage} />
+            <Route path='/contact' Component={ContactPage} />
           </Route>
           <Route Component={IsLoginRoute}>
             <Route path="/login" Component={LogInPage} />

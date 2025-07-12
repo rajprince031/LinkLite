@@ -1,0 +1,43 @@
+.ip_details_dialog_box_overlay{
+  position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.ip_details_main_content_box{
+    display:flex;
+    min-width: 200px;
+    max-width: 300px;
+    flex-direction:column;
+    background: rgb(251, 250, 250);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+      rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+      rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 10px;
+    padding:15px;
+    text-wrap: wrap;
+    text-align: left;
+    align-items: center;
+    button{
+      width: 50%;
+    }
+}
+
+.ip_details_text_list{
+  strong{
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+  }
+  li{
+    margin-bottom: 6px;
+  }
+  font-family:monospace;
+  font-size: 14px;
+}
