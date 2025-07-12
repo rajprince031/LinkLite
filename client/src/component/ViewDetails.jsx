@@ -38,8 +38,7 @@ const ViewDetails = () => {
   const [filterIp, updatefilterIP] = useState([])
   const getAllDeatils = () => {
     setIsLoading(true);
-    setTimeout(()=>{
-      axios(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
+    axios(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
       headers: {
         authorization: localStorage.getItem("authToken"),
       },
@@ -55,7 +54,6 @@ const ViewDetails = () => {
         console.log("error occur :- ", err)
         setIsLoading(false);
       });
-    },3000);
   };
 
 
@@ -84,7 +82,7 @@ const ViewDetails = () => {
   }
 
   return (
-    isLoading ? <Loader/> : <div className="main_view_details_container">
+    isLoading ? <Loader /> : <div className="main_view_details_container">
       <div className="dashboard_navbar">
         <div className="navbar__logo" >
           <p onClick={() => navigate("/")}>LinkLite</p>
@@ -92,7 +90,7 @@ const ViewDetails = () => {
         </div>
         <UserProfile />
       </div>
-    
+
       <div className='view_details_url_info'>
         Title - {details.title}
         <br />
