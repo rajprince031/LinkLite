@@ -8,6 +8,7 @@ const { restrictToLoggedInUserOnly } = require("./Middleware/login_auth");
 const { redirectRoute } = require("./routes/redirect_url_route");
 const authLoginRoute = require("./routes/auth_isLogin");
 const userAgent = require("express-useragent");
+const feedbackRoutes = require("./routes/feedback_route");
 
 require("dotenv").config();
 
@@ -40,6 +41,7 @@ app.use("/", redirectRoute);
 app.use("/auth", restrictToLoggedInUserOnly, authLoginRoute);
 app.use("/url", restrictToLoggedInUserOnly, urlRoutes);
 app.use("/user", userRoutes);
+app.use("/feedback", feedbackRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}\n${process.env.localhost_URL}`);
