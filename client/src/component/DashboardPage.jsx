@@ -8,6 +8,7 @@ import ChangeActiveStatusOfURL from "./ChangeActiveStatusOfURL";
 import { useSelector } from "react-redux";
 import UserProfile from "./UserProfile";
 import GenerateLink from "./GenerateLink";
+import Spinner from "./Spinner";
 
 const Dashboard = () => {
   const details = useSelector(state => state.userProfile);
@@ -15,6 +16,8 @@ const Dashboard = () => {
   const apiURL = LOCALHOST_API;
   const navigate = useNavigate();
   const authToken = localStorage.getItem("authToken");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const [urls, updateUrls] = useState([]);
   const [total, setTotal] = useState({
@@ -30,6 +33,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get(`${LOCALHOST_API}/url/url-shortener`, {
       headers: {
         Authorization: authToken
@@ -37,8 +41,14 @@ const Dashboard = () => {
     })
       .then((res) => {
         updateUrls(res.data)
+        setIsLoading(false);
       })
-      .catch(error => toast.error('Something went wrong'))
+      .catch(error => {
+        setIsLoading(false);
+
+        toast.error('Something went wrong')
+      })
+
   }, []);
 
   useEffect(() => {
@@ -95,7 +105,10 @@ const Dashboard = () => {
         </h2>
         <GenerateLink updateNewUrl={addingNewUrl} />
       </div>
-      <div className="table-wrapper">
+
+      {isLoading && <Spinner />}
+
+      {!isLoading && <div className="table-wrapper">
         {urls.length != 0 && <table className="responsive-table">
           <thead>
             <tr>
@@ -126,7 +139,7 @@ const Dashboard = () => {
           </tbody>
         </table>}
         {urls.length == 0 && <p className="no_activity_message">NO URL CREATED</p>}
-      </div>
+      </div>}
 
       <div className="dashboard_page_footer">
         <p>© 2024 LINKLITE. All rights reserved.</p>

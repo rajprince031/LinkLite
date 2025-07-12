@@ -8,6 +8,8 @@ import UserProfile from "./UserProfile";
 import { useSelector } from "react-redux";
 import DeleteCreatedURL from "./DeleteCreatedURL";
 import ViewIPAddressDetails from "./ViewIPAddressDetails";
+import Spinner from "./Spinner";
+import Loader from "./Loader";
 
 function formatTime(DateString) {
   const date = moment.utc(DateString);
@@ -22,6 +24,8 @@ const ViewDetails = () => {
   const userDetails = useSelector(state => state.userProfile);
   const [urlId, setUrlId] = useState(location.state?.urlId);
   const [ipAddress, updateIpAddress] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
   if (!urlId) navigate("/view_details");
 
 
@@ -33,7 +37,9 @@ const ViewDetails = () => {
 
   const [filterIp, updatefilterIP] = useState([])
   const getAllDeatils = () => {
-    axios(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
+    setIsLoading(true);
+    setTimeout(()=>{
+      axios(`${LOCALHOST_API}/url/url-shortener/${urlId}`, {
       headers: {
         authorization: localStorage.getItem("authToken"),
       },
@@ -42,11 +48,14 @@ const ViewDetails = () => {
         const urlDetails = res.data.urlDetails
         setDetails(urlDetails)
         updatefilterIP(urlDetails.vistedHistory)
+        setIsLoading(false);
       })
       .catch((error) => {
         toast.error(error.response.data.error)
         console.log("error occur :- ", err)
+        setIsLoading(false);
       });
+    },3000);
   };
 
 
@@ -75,7 +84,7 @@ const ViewDetails = () => {
   }
 
   return (
-    <div className="main_view_details_container">
+    isLoading ? <Loader/> : <div className="main_view_details_container">
       <div className="dashboard_navbar">
         <div className="navbar__logo" >
           <p onClick={() => navigate("/")}>LinkLite</p>
@@ -83,7 +92,7 @@ const ViewDetails = () => {
         </div>
         <UserProfile />
       </div>
-
+    
       <div className='view_details_url_info'>
         Title - {details.title}
         <br />
@@ -123,6 +132,7 @@ const ViewDetails = () => {
           </div>
         </div>
       </div>
+
       <div className="table-wrapper">
         {filterIp.length != 0 && <table className="responsive-table">
           <thead>

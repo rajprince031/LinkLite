@@ -170,4 +170,5 @@ text-overflow: ellipsis;
 
 .no_activity_message{
   text-align: center;
+  margin-top: 20px;
 }
