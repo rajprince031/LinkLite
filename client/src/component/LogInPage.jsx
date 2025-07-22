@@ -68,7 +68,7 @@ const LogInPage = () => {
                     </span>
                 </div>
                 <div className="input_container">
-                    <label className="input_label" htmlFor="email_field">Email</label>
+                    <label className="input_label" htmlFor="email_field">Username</label>
                     <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg" className="icon">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" stroke="#141B34" d="M7 8.5L9.942 10.239C11.657 11.253 12.343 11.253 14.058 10.239L17 8.5" />
                         <path strokeLinejoin="round" strokeWidth="1.5" stroke="#141B34" d="M2.016 13.476C2.081 16.541 2.114 18.074 3.245 19.209C4.376 20.345 5.95 20.384 9.099 20.463C11.039 20.512 12.961 20.512 14.901 20.463C18.05 20.384 19.624 20.345 20.755 19.209C21.886 18.074 21.919 16.541 21.984 13.476C22.005 12.49 22.005 11.51 21.984 10.524C21.919 7.459 21.886 5.926 20.755 4.791C19.624 3.655 18.05 3.616 14.901 3.537C12.961 3.488 11.039 3.488 9.099 3.537C5.95 3.616 4.376 3.655 3.245 4.791C2.114 5.926 2.081 7.459 2.016 10.524C1.995 11.51 1.995 12.49 2.016 13.476Z" />
@@ -76,7 +76,7 @@ const LogInPage = () => {
                     <input 
                     value={user.email} 
                     onChange={(e) => updateUser({ ...user, email: e.target.value })}
-                    placeholder="name@mail.com" 
+                    placeholder="username" 
                     type="text" 
                     className="input_field" 
                      />
