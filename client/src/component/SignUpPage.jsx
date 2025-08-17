@@ -38,14 +38,11 @@ const SingUpPage = () => {
                 return
             }).catch(err => {
                 setIsSpinner(false)
-
-                console.log("printing err : ", err);
                 toast.error(err.response.data.error)
             })
         } catch (error) {
 
             setIsSpinner(false)
-            console.log("I am signup Page ", error)
             toast.error('something went wrong')
             return;
         }
@@ -136,7 +133,6 @@ const SingUpPage = () => {
                     <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg" className="icon">
                         <path strokeLinecap="round" strokeWidth="1.5" stroke="#141B34" d="M18 11.004C17.417 9.917 16.273 9.158 14.952 9.099C13.477 9.034 11.979 9 10.329 9C8.679 9 7.181 9.034 5.706 9.099C3.953 9.177 2.513 10.488 2.279 12.162C2.126 13.254 2 14.373 2 15.513C2 16.653 2.126 17.773 2.279 18.865C2.513 20.539 3.953 21.85 5.706 21.928C6.42 21.959 7.26 21.983 8 22" />
                         <path strokeLinejoin="round" strokeLinecap="round" strokeWidth="1.5" stroke="#141B34" d="M6 9V6.5C6 4.015 8.015 2 10.5 2C12.985 2 15 4.015 15 6.5V9" />
-                        {/* (Optional) lock or eye SVG path continued */}
                     </svg>
                     <input
                         value={user.password}
