@@ -6,7 +6,7 @@ async function validateSignUpDetails(req,res,next){
         return res.status(400).json({error:"Required field are missing"});
     
     const findUser = await user.findOne({email})
-    if(findUser) return res.status(409).json({error:"email already exist"});
+    if(findUser) return res.status(409).json({error:"This username is already taken."});
 
     next();
         
