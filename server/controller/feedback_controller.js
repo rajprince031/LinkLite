@@ -6,7 +6,7 @@ async function handleFeedbackPostRequest(req, res) {
     if (!email)
       return res
         .status(400)
-        .json({ status: false, error: `Email field are missing` });
+        .json({ status: false, error: `Username field are missing` });
     const feedback = new Feedback(req.body);
     await feedback.save();
     return res.status(200).json({

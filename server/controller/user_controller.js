@@ -26,7 +26,7 @@ async function handleLoginRequest(req, res) {
     if (!findOneUser) return res.status(404).json({ error: "User not found" });
     const validateUser = findOneUser.authenticate(password);
     if (!validateUser)
-      return res.status(401).json({ error: "Password was Incorrect" });
+      return res.status(401).json({ error: "Incorrect Password" });
 
     findOneUser.encryptPassword = findOneUser.salt = undefined;
     const authToken = setUser(findOneUser); // set jwt token
@@ -57,7 +57,7 @@ async function handleProfileUpdate(req, res) {
     const {_id} = req.user;
     const findOne = await User.findById(_id);
     if (!findOne) return res.status(401).json({ error: "User not found" });
-    if(!firstName.trim() || !email.trim()) return res.status(400).json({error : 'firstName and email are required'})
+    if(!firstName.trim() || !email.trim()) return res.status(400).json({error : 'firstName and username are required'})
 
     firstName.trim() && (findOne.firstName = firstName);
     lastName.trim() && (findOne.lastName = lastName);
@@ -66,7 +66,6 @@ async function handleProfileUpdate(req, res) {
     await findOne.save();
 
     findOne.encryptPassword = findOne.salt = undefined;
-    console.log("Print kr  : ",findOne)
     return res.status(200).json({msg:"Profile Updated Successfully", "user":findOne});
   } catch (error) {
     return res.status(500).json({ error });
